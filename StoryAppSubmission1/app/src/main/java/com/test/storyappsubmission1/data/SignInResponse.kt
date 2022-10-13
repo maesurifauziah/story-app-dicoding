@@ -2,10 +2,10 @@ package com.test.storyappsubmission1.data
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse(
+data class SignInResponse(
 
 	@field:SerializedName("loginResult")
-	val loginResult: LoginResult,
+	val loginResult: SignInResult,
 
 	@field:SerializedName("error")
 	val error: Boolean,
@@ -14,7 +14,7 @@ data class LoginResponse(
 	val message: String
 )
 
-data class LoginResult(
+data class SignInResult(
 
 	@field:SerializedName("name")
 	val name: String,

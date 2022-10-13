@@ -1,12 +1,15 @@
 package com.test.storyappsubmission1.ui.main
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.test.storyappsubmission1.data.AddStoryResponse
 import com.test.storyappsubmission1.data.ListStoryItem
 import com.test.storyappsubmission1.data.StoryResponse
+import com.test.storyappsubmission1.data.UserPreferenceDatastore
 import com.test.storyappsubmission1.network.ApiConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -18,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class MainViewModel() : ViewModel() {
+class MainViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
 
     private val _storyList = MutableLiveData<List<ListStoryItem>>()
     val storyList: LiveData<List<ListStoryItem>> = _storyList
@@ -26,18 +29,26 @@ class MainViewModel() : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+
+
     companion object{
         private const val TAG = "MainViewModel"
     }
 
-
-    init{
-        getListStory()
+    fun getToken(): LiveData<String> {
+        return pref.getToken().asLiveData()
     }
 
-    private fun getListStory() {
+
+//    init{
+//
+//        getListStory(getToken().toString())
+//    }
+
+    fun getListStory(token: String) {
+
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getListStory(bearer = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXo1SDRTaENXOFV4b0tETmQiLCJpYXQiOjE2NjUxNTIzMDd9.E4Wp8Z-ufWG3fX0OAbAXisNyXunNXjGf5epws907C4E")
+        val client = ApiConfig.getApiService().getListStory(bearer = "Bearer ${token}")
         client.enqueue(object : Callback<StoryResponse> {
             override fun onResponse(
                 call: Call<StoryResponse>,
@@ -57,8 +68,8 @@ class MainViewModel() : ViewModel() {
         })
     }
 
-//    fun postNewStory(token: String, imageFile: File, desc: String) {
-    fun postNewStory(imageFile: File, desc: String) {
+    fun postNewStory(token: String, imageFile: File, desc: String) {
+//    fun postNewStory(imageFile: File, desc: String) {
         _isLoading.value = true
 
         val description = desc.toRequestBody("text/plain".toMediaType())

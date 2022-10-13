@@ -5,4 +5,8 @@
         android:id="@+id/settings_language"
         android:title="@string/label_change_language_settings"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/signout"
+        android:title="@string/label_change_language_settings"
+        app:showAsAction="never"/>
 </menu>

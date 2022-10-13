@@ -1,4 +1,4 @@
-package com.test.storyappsubmission1
+package com.test.storyappsubmission1.ui.main
 
 import android.app.Activity
 import android.content.Intent

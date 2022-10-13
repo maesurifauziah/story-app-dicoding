@@ -1,6 +1,8 @@
 package com.test.storyappsubmission1.network
 
 import com.test.storyappsubmission1.data.AddStoryResponse
+import com.test.storyappsubmission1.data.SignInResponse
+import com.test.storyappsubmission1.data.SignUpResponse
 //import com.test.storyappsubmission1.data.LoginResponse
 //import com.test.storyappsubmission1.data.RegisterResponse
 import com.test.storyappsubmission1.data.StoryResponse
@@ -24,18 +26,18 @@ interface ApiService {
         @Part("description") description: RequestBody?,
     ): Call<AddStoryResponse>
 
-//    @FormUrlEncoded
-//    @POST("/v1/register")
-//    fun register(
-//        @Field("name") name: String?,
-//        @Field("email") email: String?,
-//        @Field("password") password: String?
-//    ): Call<RegisterResponse>
-//
-//    @FormUrlEncoded
-//    @POST("/v1/login")
-//    fun login(
-//        @Field("email") email: String?,
-//        @Field("password") password: String?
-//    ): Call<LoginResponse>
+    @FormUrlEncoded
+    @POST("/v1/signup")
+    fun doSignup(
+        @Field("name") name: String?,
+        @Field("email") email: String?,
+        @Field("password") password: String?
+    ): Call<SignUpResponse>
+
+    @FormUrlEncoded
+    @POST("/v1/login")
+    fun doSignin(
+        @Field("email") email: String?,
+        @Field("password") password: String?
+    ): Call<SignInResponse>
 }
