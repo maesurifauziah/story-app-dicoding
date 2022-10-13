@@ -48,10 +48,6 @@ class MainActivity : AppCompatActivity() {
             ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
         )[SigninViewModel::class.java]
 
-//        mainViewModel.getToken().observe(this) { tokin->
-//            mainViewModel.getListStory(tokin)
-//        }
-
         signViewModel.getUser().observe(this){user->
             if (user.userId.isEmpty()){
                 val intent = Intent(this, SigninActivity::class.java)
@@ -62,17 +58,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//        signViewModel = ViewModelProvider(
-//            this,
-//            ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
-//        )[SigninViewModel::class.java]
-
         val layoutManager = LinearLayoutManager(this)
         binding.rvListStory.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvListStory.addItemDecoration(itemDecoration)
-
-
 
         mainViewModel.storyList.observe(this) { listStory ->
             setReviewData(listStory)

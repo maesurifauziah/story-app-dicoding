@@ -28,6 +28,7 @@ import com.test.storyappsubmission1.ui.signin.SigninViewModel
 import com.test.storyappsubmission1.utils.rotateBitmap
 import com.test.storyappsubmission1.utils.uriToFile
 import java.io.File
+import com.test.storyappsubmission1.utils.reduceFileImage
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "User")
 class AddNewStoryActivity : AppCompatActivity() {
@@ -135,7 +136,7 @@ class AddNewStoryActivity : AppCompatActivity() {
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        if (it.resultCode == AddNewStoryActivity.CAMERA_X_RESULT) {
+        if (it.resultCode == CAMERA_X_RESULT) {
             val myFile = it.data?.getSerializableExtra("picture") as File
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
@@ -164,12 +165,13 @@ class AddNewStoryActivity : AppCompatActivity() {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this@AddNewStoryActivity)
             getFile = myFile
+
             binding.tvAddImg.setImageURI(selectedImg)
         }
     }
 
-    private fun reduceFileImage(file: File): File {
-        return file
-    }
+//    private fun reduceFileImage(file: File): File {
+//        return file
+//    }
 
 }

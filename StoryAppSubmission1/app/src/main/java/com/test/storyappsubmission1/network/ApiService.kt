@@ -27,7 +27,7 @@ interface ApiService {
     ): Call<AddStoryResponse>
 
     @FormUrlEncoded
-    @POST("/v1/signup")
+    @POST("/v1/register")
     fun doSignup(
         @Field("name") name: String?,
         @Field("email") email: String?,

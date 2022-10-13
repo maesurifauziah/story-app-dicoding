@@ -45,9 +45,9 @@ class UserPreferenceDatastore private constructor(private val dataStore: DataSto
         @Volatile
         private var INSTANCE: UserPreferenceDatastore? = null
 
-        private val NAME_KEY = stringPreferencesKey("UserName")
-        private val USERID_KEY = stringPreferencesKey("UserUID")
-        private val TOKEN_KEY = stringPreferencesKey("UserToken")
+        private val NAME_KEY = stringPreferencesKey("name")
+        private val USERID_KEY = stringPreferencesKey("userId")
+        private val TOKEN_KEY = stringPreferencesKey("token")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferenceDatastore {
             return INSTANCE ?: synchronized(this) {

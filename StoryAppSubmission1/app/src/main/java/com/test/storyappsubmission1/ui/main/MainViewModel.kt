@@ -80,7 +80,7 @@ class MainViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
             requestImageFile
         )
 
-        val client = ApiConfig.getApiService().postNewStory(bearer = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXo1SDRTaENXOFV4b0tETmQiLCJpYXQiOjE2NjUxNTIzMDd9.E4Wp8Z-ufWG3fX0OAbAXisNyXunNXjGf5epws907C4E", imageMultipart, description)
+        val client = ApiConfig.getApiService().postNewStory(bearer = "Bearer ${token}", imageMultipart, description)
         client.enqueue(object : Callback<AddStoryResponse> {
             override fun onResponse(call: Call<AddStoryResponse>, response: Response<AddStoryResponse>) {
                 _isLoading.value = false

@@ -95,7 +95,6 @@ class CameraNewStoryActivity : AppCompatActivity() {
                     preview,
                     imageCapture
                 )
-
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraNewStoryActivity,
