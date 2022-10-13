@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Story App Submission Dicoding</string>
+    <string name="dashboard_story">Dashboard Story App</string>
+    <string name="signup">Daftar</string>
+    <string name="signin">Masuk</string>
+    <string name="signout">Keluar</string>
+    <string name="add_story">Tambah Cerita</string>
+    <string name="detail_story">Detail Cerita</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Nama</string>
+    <string name="have_account">Belum Punya Akun?</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="save">Simpan</string>
+    <string name="created_date">Tanggal Dibuat</string>
+    <string name="description">Deskripsi</string>
+    <string name="copyright">© 2022</string>
+    <string name="label_change_language_settings">Pengaturan Ubah Bahasa</string>
+</resources>

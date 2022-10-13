@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Story App Submission Dicoding</string>
+    <string name="dashboard_story">Dashboard Story App</string>
+    <string name="signup">Sign Up</string>
+    <string name="signin">Sign In</string>
+    <string name="signout">Sign Out</string>
+    <string name="add_story">Add Story</string>
+    <string name="detail_story">Detail Story</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="have_account">Don`t have an account yet?</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="save">Save</string>
+    <string name="created_date">Create Date</string>
+    <string name="description">Description</string>
+    <string name="copyright">© 2022</string>
+    <string name="label_change_language_settings">Change Language Setting</string>
+</resources>

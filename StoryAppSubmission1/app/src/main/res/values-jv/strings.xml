@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">ストーリーアプリ投稿ダイコーディング</string>
+    <string name="dashboard_story">Dashboard Story App</string>
+    <string name="signup">サインアップ</string>
+    <string name="signin">ログイン</string>
+    <string name="signout">サインアウト</string>
+    <string name="add_story">ストーリーを追加</string>
+    <string name="detail_story">詳細ストーリー</string>
+    <string name="email">Eメール</string>
+    <string name="password">パスワード</string>
+    <string name="name">名前</string>
+    <string name="have_account">まだアカウントを持っていませんか?</string>
+    <string name="camera">カメラ</string>
+    <string name="gallery">ギャラリー</string>
+    <string name="save">保存</string>
+    <string name="created_date">日付を作成します</string>
+    <string name="description">説明</string>
+    <string name="copyright">© 2022</string>
+    <string name="label_change_language_settings">言語設定の変更</string>
+</resources>
