@@ -17,4 +17,6 @@
     <string name="description">Deskripsi</string>
     <string name="copyright">© 2022</string>
     <string name="label_change_language_settings">Pengaturan Ubah Bahasa</string>
+    <string name="label_invalid_email">Format Email tidak valid</string>
+    <string name="label_validation_password">Kata Sandi tidak boleh kurang dari 6 karakter</string>
 </resources>

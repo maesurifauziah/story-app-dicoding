@@ -17,4 +17,6 @@
     <string name="description">説明</string>
     <string name="copyright">© 2022</string>
     <string name="label_change_language_settings">言語設定の変更</string>
+    <string name="label_invalid_email">メール形式が無効です</string>
+    <string name="label_validation_password">パスワードは 6 文字未満にすることはできません</string>
 </resources>

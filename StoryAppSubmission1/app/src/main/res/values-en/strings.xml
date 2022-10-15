@@ -17,4 +17,6 @@
     <string name="description">Description</string>
     <string name="copyright">© 2022</string>
     <string name="label_change_language_settings">Change Language Setting</string>
+    <string name="label_invalid_email">Email format is invalid</string>
+    <string name="label_validation_password">Password cannot be less than 6 characters</string>
 </resources>

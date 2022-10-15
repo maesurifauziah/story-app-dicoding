@@ -5,8 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.datastore.core.DataStore
@@ -70,28 +69,42 @@ class SigninActivity : AppCompatActivity() {
         }
     }
 
+    private fun showLoading(isLoading: Boolean) {
+//        binding.progressBarLogin.visibility = if (isLoading) View.VISIBLE else View.GONE
+
+        if (isLoading) {
+            binding.progressBarLogin.visibility = View.VISIBLE
+        } else {
+            binding.progressBarLogin.visibility = View.GONE
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     private fun setupAction() {
         binding.signinButton.setOnClickListener {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
             when {
                 email.isEmpty() -> {
-                    binding.edLoginEmailLayout.error = "Masukkan email"
+                    binding.edLoginEmail.error = "Masukkan email"
                 }
                 password.isEmpty() -> {
-                    binding.edLoginPasswordLayout.error = "Masukkan password"
+                    binding.edLoginPassword.error = "Masukkan password"
                 }
                 password.length <= 6 -> {
-                    binding.edLoginPasswordLayout.error = "Password tidak boleh kurang dari 6"
+                    binding.edLoginPassword.error = "Password tidak boleh kurang dari 6"
                 }
 
                 else -> {
                     signinViewModel.signin(email, password)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }, 5000)
+                    signinViewModel.isLoading.observe(this) {
+                        showLoading(it)
+                    }
                 }
             }
         }

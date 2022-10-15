@@ -14,9 +14,11 @@ import retrofit2.Response
 
 class SigninViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
 
-    var loading = MutableLiveData(View.GONE)
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     val error = MutableLiveData("")
-    val tempEmail = MutableLiveData("")
+    val message = MutableLiveData("")
     private val TAG = SigninViewModel::class.simpleName
 
 
@@ -39,8 +41,7 @@ class SigninViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
     }
 
     fun signin(email: String, password: String) {
-        tempEmail.postValue(email) // temporary hold email for save user preferences
-        loading.postValue(View.VISIBLE)
+        _isLoading.value = true
         val client = ApiConfig.getApiService().doSignin(email, password)
         client.enqueue(object : Callback<SignInResponse> {
             override fun onResponse(call: Call<SignInResponse>, response: Response<SignInResponse>) {
@@ -49,12 +50,12 @@ class SigninViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
                     200 -> signinResult.postValue(response.body())
                     else -> error.postValue("ERROR ${response.code()} : ${response.message()}")
                 }
-
-                loading.postValue(View.GONE)
+                message.postValue(response.message())
+                _isLoading.value = false
             }
 
             override fun onFailure(call: Call<SignInResponse>, t: Throwable) {
-                loading.postValue(View.GONE)
+                _isLoading.value = true
                 Log.e(TAG, "onFailure Call: ${t.message}")
                 error.postValue(t.message)
             }

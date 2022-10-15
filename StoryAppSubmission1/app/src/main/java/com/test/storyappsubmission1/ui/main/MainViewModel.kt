@@ -57,6 +57,7 @@ class MainViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     _storyList.value = response.body()?.listStory
+                    Log.e(TAG, "idSuccess: ${response.body()?.message}")
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
@@ -69,7 +70,6 @@ class MainViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
     }
 
     fun postNewStory(token: String, imageFile: File, desc: String) {
-//    fun postNewStory(imageFile: File, desc: String) {
         _isLoading.value = true
 
         val description = desc.toRequestBody("text/plain".toMediaType())
