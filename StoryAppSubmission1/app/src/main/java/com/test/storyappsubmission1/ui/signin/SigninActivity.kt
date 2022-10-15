@@ -1,5 +1,7 @@
 package com.test.storyappsubmission1.ui.signin
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -32,11 +34,29 @@ class SigninActivity : AppCompatActivity() {
         setupView()
         setupViewModel()
         setupAction()
+        playAnimation()
 
         binding.haveAccountTextView.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun playAnimation() {
+        val haveAccountTextView = ObjectAnimator.ofFloat(binding.haveAccountTextView, View.ALPHA, 1f).setDuration(500)
+        val tvSignin = ObjectAnimator.ofFloat(binding.tvSignin, View.ALPHA, 1f).setDuration(500)
+        val ivSignin = ObjectAnimator.ofFloat(binding.ivSignin, View.ALPHA, 1f).setDuration(500)
+        val tvLoginEmail = ObjectAnimator.ofFloat(binding.tvLoginEmail, View.ALPHA, 1f).setDuration(500)
+        val edLoginEmail = ObjectAnimator.ofFloat(binding.edLoginEmail, View.ALPHA, 1f).setDuration(500)
+        val tvEdLoginPassword = ObjectAnimator.ofFloat(binding.tvEdLoginPassword, View.ALPHA, 1f).setDuration(500)
+        val edLoginPassword = ObjectAnimator.ofFloat(binding.edLoginPassword, View.ALPHA, 1f).setDuration(500)
+        val signin = ObjectAnimator.ofFloat(binding.signinButton, View.ALPHA, 1f).setDuration(500)
+        val copyrightTextView = ObjectAnimator.ofFloat(binding.copyrightTextView, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(tvSignin, ivSignin, tvLoginEmail, edLoginEmail, tvEdLoginPassword, edLoginPassword, haveAccountTextView, signin, copyrightTextView)
+            startDelay = 500
+        }.start()
     }
 
     private fun setupView() {
@@ -109,4 +129,5 @@ class SigninActivity : AppCompatActivity() {
             }
         }
     }
+
 }

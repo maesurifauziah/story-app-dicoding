@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/tv_signup"
+            android:alpha="0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -29,7 +30,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/iv_signup"
+            android:alpha="0"
             android:layout_width="346dp"
             android:layout_height="279dp"
             android:layout_marginStart="32dp"
@@ -42,7 +44,8 @@
             app:srcCompat="@drawable/sign_up" />
 
         <TextView
-            android:id="@+id/nameTextView"
+            android:id="@+id/tv_register_name"
+            android:alpha="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -51,10 +54,11 @@
             android:text="@string/name"
             android:textColor="@color/blue_600"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_signup" />
 
         <com.test.storyappsubmission1.ui.customview.CVClearEditText
             android:id="@+id/ed_register_name"
+            android:alpha="0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -63,11 +67,12 @@
             android:textColorHint="@color/blue_600"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_register_name"
             tools:ignore="TextContrastCheck" />
 
         <TextView
-            android:id="@+id/emailTextView"
+            android:id="@+id/tv_register_email"
+            android:alpha="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -80,6 +85,7 @@
 
         <com.test.storyappsubmission1.ui.customview.CVEmailEditText
             android:id="@+id/ed_register_email"
+            android:alpha="0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -88,11 +94,12 @@
             android:textColorHint="@color/blue_600"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailTextView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_register_email"
             tools:ignore="TextContrastCheck" />
 
         <TextView
-            android:id="@+id/passwordTextView"
+            android:id="@+id/tv_register_password"
+            android:alpha="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -105,6 +112,7 @@
 
         <com.test.storyappsubmission1.ui.customview.CVPasswordEditText
             android:id="@+id/ed_register_password"
+            android:alpha="0"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -113,12 +121,13 @@
             android:textColorHint="@color/blue_600"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordTextView"
+            app:layout_constraintTop_toBottomOf="@+id/tv_register_password"
             tools:ignore="TextContrastCheck" />
 
 
         <Button
             android:id="@+id/signup_button"
+            android:alpha="0"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_marginStart="32dp"
@@ -164,6 +173,7 @@
 
         <TextView
             android:id="@+id/copyrightTextView"
+            android:alpha="0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
