@@ -13,6 +13,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.test.storyappsubmission1.R
 import com.test.storyappsubmission1.databinding.ActivityCameraNewStoryBinding
 import com.test.storyappsubmission1.utils.createFile
 
@@ -54,7 +55,7 @@ class CameraNewStoryActivity : AppCompatActivity() {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
                         this@CameraNewStoryActivity,
-                        "Gagal mengambil gambar.",
+                        getString(R.string.failed_take_picture),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -98,7 +99,7 @@ class CameraNewStoryActivity : AppCompatActivity() {
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraNewStoryActivity,
-                    "Gagal memunculkan kamera.",
+                    R.string.failed_bring_up_camera,
                     Toast.LENGTH_SHORT
                 ).show()
             }

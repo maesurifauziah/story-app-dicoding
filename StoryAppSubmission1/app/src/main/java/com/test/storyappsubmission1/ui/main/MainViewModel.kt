@@ -1,11 +1,9 @@
 package com.test.storyappsubmission1.ui.main
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import com.test.storyappsubmission1.data.AddStoryResponse
 import com.test.storyappsubmission1.data.ListStoryItem
 import com.test.storyappsubmission1.data.StoryResponse
@@ -29,21 +27,10 @@ class MainViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-
-
     companion object{
         private const val TAG = "MainViewModel"
     }
 
-    fun getToken(): LiveData<String> {
-        return pref.getToken().asLiveData()
-    }
-
-
-//    init{
-//
-//        getListStory(getToken().toString())
-//    }
 
     fun getListStory(token: String) {
 
@@ -57,7 +44,6 @@ class MainViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     _storyList.value = response.body()?.listStory
-                    Log.e(TAG, "idSuccess: ${response.body()?.message}")
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }

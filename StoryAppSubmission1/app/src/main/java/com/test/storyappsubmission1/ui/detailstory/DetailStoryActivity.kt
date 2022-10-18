@@ -1,10 +1,13 @@
 package com.test.storyappsubmission1.ui.detailstory
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.test.storyappsubmission1.R
 import com.test.storyappsubmission1.databinding.ActivityDetailStoryBinding
+import com.test.storyappsubmission1.utils.withDateFormat
+import java.util.*
 
 class DetailStoryActivity : AppCompatActivity() {
     private lateinit var  binding: ActivityDetailStoryBinding
@@ -14,6 +17,7 @@ class DetailStoryActivity : AppCompatActivity() {
         const val DESCRIPTION = "description"
         const val PHOTO_URL = "photoUrl"
     }
+    @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailStoryBinding.inflate(layoutInflater)
@@ -28,11 +32,12 @@ class DetailStoryActivity : AppCompatActivity() {
 
         Glide.with(binding.root.context)
             .load(photoUrl)
-            .into(binding.detailImg)
-        binding.detailName.text = name
-        binding.detailCreatedTime.text = create_at
-        binding.detailDescription.text = description
-
+            .into(binding.ivDetailPhoto)
+        binding.tvDetailName.text = name
+        if (create_at != null) {
+            binding.tvDetailCreatedTime.text = create_at.withDateFormat()
+        }
+        binding.tvDetailDescription.text = description
 
     }
 }

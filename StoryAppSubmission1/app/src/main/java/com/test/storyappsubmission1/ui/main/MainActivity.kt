@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(mIntent)
             }
-            R.id.signout -> {
+            R.id.action_logout -> {
                 signViewModel.signout()
             }
 

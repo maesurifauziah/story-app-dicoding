@@ -12,14 +12,14 @@ class ViewModelFactory(private val pref: UserPreferenceDatastore) : ViewModelPro
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(pref) as T
+            modelClass.isAssignableFrom(SigninViewModel::class.java) -> {
+                SigninViewModel(pref) as T
             }
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
                 SignupViewModel(pref) as T
             }
-            modelClass.isAssignableFrom(SigninViewModel::class.java) -> {
-                SigninViewModel(pref) as T
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
+                MainViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

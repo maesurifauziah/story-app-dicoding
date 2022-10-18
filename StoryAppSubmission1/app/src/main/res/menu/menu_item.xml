@@ -6,7 +6,7 @@
         android:title="@string/label_change_language_settings"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/signout"
+        android:id="@+id/action_logout"
         android:title="@string/signout"
         app:showAsAction="never"/>
 </menu>

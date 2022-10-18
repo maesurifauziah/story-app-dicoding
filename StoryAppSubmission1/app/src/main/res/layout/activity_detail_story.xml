@@ -13,14 +13,14 @@
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/detail_name"
+        app:layout_constraintEnd_toStartOf="@+id/tv_detail_name"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/avatar" />
 
     <TextView
-        android:id="@+id/detail_name"
+        android:id="@+id/tv_detail_name"
         android:layout_width="301dp"
         android:layout_height="30dp"
         android:layout_marginTop="28dp"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/detail_img"
+        android:id="@+id/iv_detail_photo"
         android:layout_width="375dp"
         android:layout_height="230dp"
         android:layout_marginStart="16dp"
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_name"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -62,24 +62,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_img">
+        app:layout_constraintTop_toBottomOf="@+id/iv_detail_photo">
 
         <TextView
-            android:id="@+id/detail_created_time"
+            android:id="@+id/tv_detail_created_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_medium"
+            android:paddingRight="12dp"
             android:paddingBottom="6dp"
             android:text="@string/created_date"
             android:textColor="@color/gray"
-            android:textSize="14sp"
+            android:textSize="11sp"
             android:textStyle="italic"
             android:transitionName="story_upload_time" />
 
         <TextView
-            android:id="@+id/detail_description"
+            android:id="@+id/tv_detail_description"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:fontFamily="@font/poppins_medium"

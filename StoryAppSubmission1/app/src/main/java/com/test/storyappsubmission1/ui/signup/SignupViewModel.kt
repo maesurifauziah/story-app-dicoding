@@ -1,7 +1,6 @@
 package com.test.storyappsubmission1.ui.signup
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,11 +25,13 @@ class SignupViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
         val client = ApiConfig.getApiService().doSignup(name, email, password)
         client.enqueue(object : Callback<SignUpResponse> {
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-                // parsing manual error code API
-                Log.e(TAG, "isSuccess:  ${response.message()}")
+                when (response.code()) {
+                    400 -> error.postValue("400")
+                    201 -> message.postValue("201")
+                    else -> error.postValue("ERROR ${response.code()} : ${response.errorBody()}")
+                }
                 _isLoading.value = false
             }
-
             override fun onFailure(call: Call<SignUpResponse>, t: Throwable) {
                 _isLoading.value = true
                 Log.e(TAG, "onFailure Call: ${t.message}")

@@ -3,9 +3,12 @@ package com.test.storyappsubmission1.ui.signup
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -14,9 +17,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.test.storyappsubmission1.R
 import com.test.storyappsubmission1.data.UserPreferenceDatastore
 import com.test.storyappsubmission1.databinding.ActivitySignupBinding
 import com.test.storyappsubmission1.ui.ViewModelFactory
+import com.test.storyappsubmission1.ui.signin.SigninActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "User")
 
@@ -71,7 +76,54 @@ class SignupActivity : AppCompatActivity() {
             this,
             ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
         )[SignupViewModel::class.java]
+
+        signupViewModel?.let { signupvm ->
+            signupvm.message.observe(this) { message ->
+                if (message == "201") {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(R.string.info)
+                    builder.setMessage(R.string.validate_register_success)
+                    builder.setIcon(R.drawable.ic_baseline_check_green_24)
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        alertDialog.dismiss()
+                        val intent = Intent(this, SigninActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }, 2000)
+                }
+            }
+            signupvm.error.observe(this) { error ->
+                if (error == "400") {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(R.string.info)
+                    builder.setMessage(R.string.validate_register_failed)
+                    builder.setIcon(R.drawable.ic_baseline_close_red_24)
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        alertDialog.dismiss()
+                    }, 2000)
+                }
+            }
+            signupvm.isLoading.observe(this) {
+                showLoading(it)
+            }
+
+        }
     }
+    private fun showLoading(isLoading: Boolean) {
+
+        if (isLoading) {
+            binding.progressBarRegister.visibility = View.VISIBLE
+        } else {
+            binding.progressBarRegister.visibility = View.GONE
+        }
+    }
+
 
     private fun setupAction() {
         binding.signupButton.setOnClickListener {
@@ -80,28 +132,19 @@ class SignupActivity : AppCompatActivity() {
             val password = binding.edRegisterPassword.text.toString()
             when {
                 name.isEmpty() -> {
-                    binding.edRegisterName.error = "Masukkan nama"
+                    binding.edRegisterName.error = getString(R.string.input_name)
                 }
                 email.isEmpty() -> {
-                    binding.edRegisterEmail.error = "Masukkan email"
+                    binding.edRegisterEmail.error = getString(R.string.input_email)
                 }
                 password.isEmpty() -> {
-                    binding.edRegisterPassword.error = "Masukkan password"
+                    binding.edRegisterPassword.error = getString(R.string.input_password)
                 }
-                password.length <= 6 -> {
-                    binding.edRegisterPassword.error = "Password tidak boleh kurang dari 6"
+                password.length < 6 -> {
+                    binding.edRegisterPassword.error = getString(R.string.label_validation_password)
                 }
                 else -> {
                     signupViewModel.signup(name, email, password)
-                    AlertDialog.Builder(this).apply {
-                        setTitle("Yeah!")
-                        setMessage("Akunnya sudah jadi nih. Yuk, signin dan belajar coding.")
-                        setPositiveButton("Lanjut") { _, _ ->
-                            finish()
-                        }
-                        create()
-                        show()
-                    }
                 }
             }
         }

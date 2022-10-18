@@ -1,7 +1,6 @@
 package com.test.storyappsubmission1.ui.signin
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.*
 import com.test.storyappsubmission1.data.SignInResponse
 import com.test.storyappsubmission1.data.SignInResult
@@ -47,10 +46,15 @@ class SigninViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
             override fun onResponse(call: Call<SignInResponse>, response: Response<SignInResponse>) {
                 // parsing manual error code API
                 when (response.code()) {
-                    200 -> signinResult.postValue(response.body())
+                    200 -> {
+                        signinResult.postValue(response.body())
+                        message.postValue("200")
+                    }
+                    400 -> error.postValue("400")
+                    401 -> error.postValue("401")
                     else -> error.postValue("ERROR ${response.code()} : ${response.message()}")
                 }
-                message.postValue(response.message())
+
                 _isLoading.value = false
             }
 

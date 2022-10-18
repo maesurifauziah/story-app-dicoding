@@ -19,4 +19,18 @@
     <string name="label_change_language_settings">Change Language Setting</string>
     <string name="label_invalid_email">Email format is invalid</string>
     <string name="label_validation_password">Password cannot be less than 6 characters</string>
+    <string name="validate_register_success">User has been created!</string>
+    <string name="validate_register_failed">Email already exists!</string>
+    <string name="login_user_not_found">User not found!</string>
+    <string name="validate_login_success">Login successful!</string>
+    <string name="input_name">Input Name</string>
+    <string name="input_email">Input Email</string>
+    <string name="input_password">Input Password</string>
+    <string name="description_mandatory">Description must be filled</string>
+    <string name="image_mandatory">Please enter the image file first.</string>
+    <string name="permission">Not getting permission.</string>
+    <string name="choose_picture">Choose a Picture</string>
+    <string name="failed_take_picture">Failed to take picture.</string>
+    <string name="failed_bring_up_camera">Failed to bring up camera.</string>
+    <string name="info">Information</string>
 </resources>

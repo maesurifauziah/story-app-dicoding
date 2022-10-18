@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.test.storyappsubmission1.data.ListStoryItem
 import com.test.storyappsubmission1.databinding.ItemStoryBinding
 import com.test.storyappsubmission1.ui.detailstory.DetailStoryActivity
+import com.test.storyappsubmission1.utils.withDateFormat
 
 class StoryAdapter(private val listReview: List<ListStoryItem>) : RecyclerView.Adapter<StoryAdapter.MyViewHolderStory>() {
 
@@ -40,9 +41,9 @@ class StoryAdapter(private val listReview: List<ListStoryItem>) : RecyclerView.A
                 .load(data.photoUrl)
                 .into(binding.imgItemPhoto)
 
-            binding.tvName.text = data.name
-            binding.tvCreated.text = data.createdAt
-            binding.tvDescription.text = data.description
+            binding.tvItemName.text = data.name
+            binding.tvItemCreated.text = data.createdAt.withDateFormat()
+            binding.tvItemDescription.text = data.description
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailStoryActivity::class.java)
                 intent.putExtra(DetailStoryActivity.NAME, data.name)
@@ -54,9 +55,9 @@ class StoryAdapter(private val listReview: List<ListStoryItem>) : RecyclerView.A
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
                         itemView.context as Activity,
                         androidx.core.util.Pair(binding.imgItemPhoto, "photo"),
-                        androidx.core.util.Pair(binding.tvName, "name"),
-                        androidx.core.util.Pair(binding.tvCreated, "createdate"),
-                        androidx.core.util.Pair(binding.tvDescription, "description"),
+                        androidx.core.util.Pair(binding.tvItemName, "name"),
+                        androidx.core.util.Pair(binding.tvItemCreated, "createdate"),
+                        androidx.core.util.Pair(binding.tvItemDescription, "description"),
                     )
                 itemView.context.startActivity(intent, optionsCompat.toBundle())
             }

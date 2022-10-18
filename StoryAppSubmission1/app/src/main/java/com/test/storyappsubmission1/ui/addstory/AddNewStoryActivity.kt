@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -23,7 +24,6 @@ import com.test.storyappsubmission1.databinding.ActivityAddNewStoryBinding
 import com.test.storyappsubmission1.ui.ViewModelFactory
 import com.test.storyappsubmission1.ui.main.MainActivity
 import com.test.storyappsubmission1.ui.main.MainViewModel
-import com.test.storyappsubmission1.ui.signin.SigninActivity
 import com.test.storyappsubmission1.ui.signin.SigninViewModel
 import com.test.storyappsubmission1.utils.rotateBitmap
 import com.test.storyappsubmission1.utils.uriToFile
@@ -53,7 +53,7 @@ class AddNewStoryActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    getString(R.string.permission),
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -95,37 +95,38 @@ class AddNewStoryActivity : AppCompatActivity() {
 
         binding.btnAddCamera.setOnClickListener { startCameraX() }
         binding.btnAddGalery.setOnClickListener { startGallery() }
-        binding.btnSaveStory.setOnClickListener {
-//
+        binding.buttonAdd.setOnClickListener {
             if (getFile != null) {
-
-                if(binding.addDesc.text.toString().isNotEmpty()) {
+                if(binding.edAddDescription.text.toString().isNotEmpty()) {
                     val file = reduceFileImage(getFile as File)
                     signViewModel.getUser().observe(this){user->
-                        mainViewModel.postNewStory(user.token, file, binding.addDesc.text.toString())
-                        Toast.makeText(
-                            this@AddNewStoryActivity,
-                            "Upload story berhasil!",
-                            Toast.LENGTH_SHORT).show()
-                        val i = Intent(this, MainActivity::class.java)
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(i)
+                        mainViewModel.postNewStory(user.token, file, binding.edAddDescription.text.toString())
+                        mainViewModel.isLoading.observe(this) {
+                            showLoading(it)
+                        }
                     }
-
                 } else {
-                    Toast.makeText(this@AddNewStoryActivity, "Deskripsi harus di isi", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddNewStoryActivity, getString(R.string.description_mandatory), Toast.LENGTH_SHORT).show()
                 }
-
             } else {
-                Toast.makeText(this@AddNewStoryActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddNewStoryActivity, getString(R.string.image_mandatory), Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBarAdd.visibility = View.VISIBLE
+        } else {
+            binding.progressBarAdd.visibility = View.GONE
 
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
+    }
 
     private fun startCameraX() {
         val intent = Intent(this, CameraNewStoryActivity::class.java)
@@ -154,7 +155,7 @@ class AddNewStoryActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = ACTION_GET_CONTENT
         intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        val chooser = Intent.createChooser(intent, getString(R.string.choose_picture))
         launcherIntentGallery.launch(chooser)
     }
 
@@ -169,9 +170,4 @@ class AddNewStoryActivity : AppCompatActivity() {
             binding.tvAddImg.setImageURI(selectedImg)
         }
     }
-
-//    private fun reduceFileImage(file: File): File {
-//        return file
-//    }
-
 }
