@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.test.storyappsubmission1.R
 import com.test.storyappsubmission1.databinding.ActivityDetailStoryBinding
 import com.test.storyappsubmission1.utils.withDateFormat
-import java.util.*
+
 
 class DetailStoryActivity : AppCompatActivity() {
     private lateinit var  binding: ActivityDetailStoryBinding
@@ -34,9 +34,7 @@ class DetailStoryActivity : AppCompatActivity() {
             .load(photoUrl)
             .into(binding.ivDetailPhoto)
         binding.tvDetailName.text = name
-        if (create_at != null) {
-            binding.tvDetailCreatedTime.text = create_at.withDateFormat()
-        }
+        binding.tvDetailCreatedTime.text = create_at?.withDateFormat()
         binding.tvDetailDescription.text = description
 
     }
