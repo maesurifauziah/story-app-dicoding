@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.test.storyappsubmission2.data.AddStoryResponse
-import com.test.storyappsubmission2.data.ListStoryItem
-import com.test.storyappsubmission2.data.StoryResponse
-import com.test.storyappsubmission2.data.UserPreferenceDatastore
+import com.test.storyappsubmission2.data.remote.response.AddStoryResponse
+import com.test.storyappsubmission2.data.remote.response.ListStoryItem
+import com.test.storyappsubmission2.data.remote.response.StoryResponse
+import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.network.ApiConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

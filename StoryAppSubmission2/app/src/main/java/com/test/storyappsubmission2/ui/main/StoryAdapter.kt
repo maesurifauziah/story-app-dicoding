@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.test.storyappsubmission2.data.ListStoryItem
+import com.test.storyappsubmission2.data.remote.response.ListStoryItem
 import com.test.storyappsubmission2.databinding.ItemStoryBinding
 import com.test.storyappsubmission2.ui.detailstory.DetailStoryActivity
 import com.test.storyappsubmission2.utils.withDateFormat

@@ -1,11 +1,9 @@
 package com.test.storyappsubmission2.network
 
-import com.test.storyappsubmission2.data.AddStoryResponse
-import com.test.storyappsubmission2.data.SignInResponse
-import com.test.storyappsubmission2.data.SignUpResponse
-//import com.test.storyappsubmission2.data.LoginResponse
-//import com.test.storyappsubmission2.data.RegisterResponse
-import com.test.storyappsubmission2.data.StoryResponse
+import com.test.storyappsubmission2.data.remote.response.AddStoryResponse
+import com.test.storyappsubmission2.data.remote.response.SignInResponse
+import com.test.storyappsubmission2.data.remote.response.SignUpResponse
+import com.test.storyappsubmission2.data.remote.response.StoryResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

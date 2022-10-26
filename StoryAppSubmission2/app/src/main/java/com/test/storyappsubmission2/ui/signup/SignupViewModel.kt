@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.test.storyappsubmission2.data.SignUpResponse
-import com.test.storyappsubmission2.data.UserPreferenceDatastore
+import com.test.storyappsubmission2.data.remote.response.SignUpResponse
+import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.network.ApiConfig
 import com.test.storyappsubmission2.ui.signin.SigninViewModel
 import retrofit2.Call

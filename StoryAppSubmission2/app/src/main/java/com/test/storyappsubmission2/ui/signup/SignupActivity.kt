@@ -18,7 +18,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.test.storyappsubmission2.R
-import com.test.storyappsubmission2.data.UserPreferenceDatastore
+import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.databinding.ActivitySignupBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.signin.SigninActivity

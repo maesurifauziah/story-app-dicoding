@@ -2,9 +2,9 @@ package com.test.storyappsubmission2.ui.signin
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.test.storyappsubmission2.data.SignInResponse
-import com.test.storyappsubmission2.data.SignInResult
-import com.test.storyappsubmission2.data.UserPreferenceDatastore
+import com.test.storyappsubmission2.data.remote.response.SignInResponse
+import com.test.storyappsubmission2.data.remote.response.SignInResult
+import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.network.ApiConfig
 import kotlinx.coroutines.launch
 import retrofit2.Call

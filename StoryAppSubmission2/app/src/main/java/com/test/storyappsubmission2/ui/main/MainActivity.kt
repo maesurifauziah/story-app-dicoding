@@ -15,8 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.storyappsubmission2.R
-import com.test.storyappsubmission2.data.ListStoryItem
-import com.test.storyappsubmission2.data.UserPreferenceDatastore
+import com.test.storyappsubmission2.data.remote.response.ListStoryItem
+import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.databinding.ActivityMainBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.addstory.AddNewStoryActivity

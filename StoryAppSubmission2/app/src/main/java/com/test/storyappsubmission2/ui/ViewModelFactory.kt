@@ -2,7 +2,7 @@ package com.test.storyappsubmission2.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.test.storyappsubmission2.data.UserPreferenceDatastore
+import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.ui.main.MainViewModel
 import com.test.storyappsubmission2.ui.signin.SigninViewModel
 import com.test.storyappsubmission2.ui.signup.SignupViewModel
