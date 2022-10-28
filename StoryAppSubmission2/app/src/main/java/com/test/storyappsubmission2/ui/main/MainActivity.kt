@@ -8,27 +8,26 @@ import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.storyappsubmission2.R
 import com.test.storyappsubmission2.data.remote.response.ListStoryItem
-import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.databinding.ActivityMainBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.addstory.AddNewStoryActivity
 import com.test.storyappsubmission2.ui.signin.SigninActivity
 import com.test.storyappsubmission2.ui.signin.SigninViewModel
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "User")
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var signViewModel: SigninViewModel
+    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val signinViewModel: SigninViewModel by viewModels {
+        factory
+    }
+    private val mainViewModel: MainViewModel by viewModels {
+        factory
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,37 +37,29 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.dashboard_story)
 
-        mainViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
-        )[MainViewModel::class.java]
 
-        signViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
-        )[SigninViewModel::class.java]
-
-        signViewModel.getUser().observe(this){user->
+        signinViewModel.getUser().observe(this){user->
             if (user.userId.isEmpty()){
                 val intent = Intent(this, SigninActivity::class.java)
                 startActivity(intent)
                 finish()
             }else{
-                mainViewModel.getListStory(user.token)
+                mainViewModel.getListStory(user.token).observe(this){
+                    it.listStory?.let { it1 -> setReviewData(it1) }
+                }
             }
         }
+
+//        mainViewModel.getListStory("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWhNVXNpNXg0WDJSWWduMUwiLCJpYXQiOjE2NjY5NDE5NTR9.dVXJVjp4qEZcAi1muwBKlcK19TkgG8sJPK0s7RqoKIE").observe(this){
+//            setReviewData(it.listStory)
+//        }
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvListStory.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvListStory.addItemDecoration(itemDecoration)
 
-        mainViewModel.storyList.observe(this) { listStory ->
-            setReviewData(listStory)
-        }
-        mainViewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
+
 
         binding.btnAddStory.setOnClickListener {
             val i = Intent(this@MainActivity, AddNewStoryActivity::class.java)
@@ -88,14 +79,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(mIntent)
             }
             R.id.action_logout -> {
-                signViewModel.signout()
+                signinViewModel.signout()
             }
 
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setReviewData(listStory: List<ListStoryItem>) {
+    private fun setReviewData(listStory: List<ListStoryItem>?) {
         val adapter = StoryAdapter(listStory as ArrayList<ListStoryItem>)
         binding.rvListStory.adapter = adapter
     }

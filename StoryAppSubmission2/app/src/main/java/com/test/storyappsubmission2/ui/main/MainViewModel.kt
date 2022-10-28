@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.test.storyappsubmission2.data.StoryRepository
 import com.test.storyappsubmission2.data.remote.response.AddStoryResponse
 import com.test.storyappsubmission2.data.remote.response.ListStoryItem
 import com.test.storyappsubmission2.data.remote.response.StoryResponse
@@ -19,71 +20,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class MainViewModel(private val pref: UserPreferenceDatastore) : ViewModel() {
+class MainViewModel(private val repo: StoryRepository) : ViewModel() {
 
-    private val _storyList = MutableLiveData<List<ListStoryItem>>()
-    val storyList: LiveData<List<ListStoryItem>> = _storyList
+    fun getListStory(token: String) = repo.getListStory(token)
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    companion object{
-        private const val TAG = "MainViewModel"
-    }
-
-
-    fun getListStory(token: String) {
-
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getListStory(bearer = "Bearer ${token}")
-        client.enqueue(object : Callback<StoryResponse> {
-            override fun onResponse(
-                call: Call<StoryResponse>,
-                response: Response<StoryResponse>
-            ) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _storyList.value = response.body()?.listStory
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
-            }
-            override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
-                _isLoading.value = true
-                Log.e(TAG, "onFailure: ${t.message}")
-            }
-        })
-    }
-
-    fun postNewStory(token: String, imageFile: File, desc: String) {
-        _isLoading.value = true
-
-        val description = desc.toRequestBody("text/plain".toMediaType())
-        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "photo",
-            imageFile.name,
-            requestImageFile
-        )
-
-        val client = ApiConfig.getApiService().postNewStory(bearer = "Bearer ${token}", imageMultipart, description)
-        client.enqueue(object : Callback<AddStoryResponse> {
-            override fun onResponse(call: Call<AddStoryResponse>, response: Response<AddStoryResponse>) {
-                _isLoading.value = false
-                when (response.code()) {
-                    401 -> "${response.code()} : Bad Request"
-                    403 -> "${response.code()} : Forbidden"
-                    404 -> "${response.code()} : Not Found"
-                    else -> "${response.code()} : ${response.message()}"
-                }
-            }
-
-            override fun onFailure(call: Call<AddStoryResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
-        })
-    }
-
+    fun postNewStory(token: String, imageFile: File, desc: String) = repo.postNewStory(token, imageFile, desc)
 
 }

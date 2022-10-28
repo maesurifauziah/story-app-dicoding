@@ -1,7 +1,6 @@
 package com.test.storyappsubmission2.ui.addstory
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
@@ -12,14 +11,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import com.test.storyappsubmission2.R
-import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.databinding.ActivityAddNewStoryBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.main.MainActivity
@@ -30,11 +25,16 @@ import com.test.storyappsubmission2.utils.uriToFile
 import java.io.File
 import com.test.storyappsubmission2.utils.reduceFileImage
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "User")
 class AddNewStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddNewStoryBinding
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var signViewModel: SigninViewModel
+
+    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val signinViewModel: SigninViewModel by viewModels {
+        factory
+    }
+    private val mainViewModel: MainViewModel by viewModels {
+        factory
+    }
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -73,18 +73,6 @@ class AddNewStoryActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.add_story)
 
-
-        mainViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
-        )[MainViewModel::class.java]
-
-        signViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
-        )[SigninViewModel::class.java]
-
-
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
                 this,
@@ -99,10 +87,13 @@ class AddNewStoryActivity : AppCompatActivity() {
             if (getFile != null) {
                 if(binding.edAddDescription.text.toString().isNotEmpty()) {
                     val file = reduceFileImage(getFile as File)
-                    signViewModel.getUser().observe(this){user->
-                        mainViewModel.postNewStory(user.token, file, binding.edAddDescription.text.toString())
-                        mainViewModel.isLoading.observe(this) {
-                            showLoading(it)
+                    signinViewModel.getUser().observe(this){user->
+                        mainViewModel.postNewStory(user.token, file, binding.edAddDescription.text.toString()).observe(this){ result ->
+                            if (result.message == "") {
+                                showLoading(true)
+                            } else {
+                                showLoading(false)
+                            }
                         }
                     }
                 } else {

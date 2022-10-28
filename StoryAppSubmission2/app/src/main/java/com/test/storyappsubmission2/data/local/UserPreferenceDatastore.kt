@@ -1,5 +1,6 @@
 package com.test.storyappsubmission2.data.local
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -10,14 +11,12 @@ import com.test.storyappsubmission2.data.remote.response.SignInResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore("User")
 
-class UserPreferenceDatastore private constructor(private val dataStore: DataStore<Preferences>) {
-
-    fun getToken(): Flow<String> = dataStore.data.map { it[TOKEN_KEY] ?: "Tidak diatur" }
+class UserPreferenceDatastore(val context: Context) {
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("User")
 
     suspend fun saveUser(userName: String, userId: String, userToken: String) {
-        dataStore.edit { preferences ->
+        context.dataStore.edit { preferences ->
             preferences[NAME_KEY] = userName
             preferences[USERID_KEY] = userId
             preferences[TOKEN_KEY] = userToken
@@ -25,7 +24,7 @@ class UserPreferenceDatastore private constructor(private val dataStore: DataSto
     }
 
     fun getUser(): Flow<SignInResult> {
-        return dataStore.data.map { preferences ->
+        return context.dataStore.data.map { preferences ->
             SignInResult(
                 preferences[NAME_KEY] ?:"",
                 preferences[USERID_KEY] ?:"",
@@ -35,7 +34,7 @@ class UserPreferenceDatastore private constructor(private val dataStore: DataSto
     }
 
     suspend fun signout() {
-        dataStore.edit { preferences ->
+        context.dataStore.edit { preferences ->
             preferences[NAME_KEY] = ""
             preferences[USERID_KEY] = ""
             preferences[TOKEN_KEY] = ""
@@ -43,6 +42,7 @@ class UserPreferenceDatastore private constructor(private val dataStore: DataSto
     }
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: UserPreferenceDatastore? = null
 
@@ -50,9 +50,9 @@ class UserPreferenceDatastore private constructor(private val dataStore: DataSto
         private val USERID_KEY = stringPreferencesKey("userId")
         private val TOKEN_KEY = stringPreferencesKey("token")
 
-        fun getInstance(dataStore: DataStore<Preferences>): UserPreferenceDatastore {
+        fun getInstance(contex: Context): UserPreferenceDatastore {
             return INSTANCE ?: synchronized(this) {
-                val instance = UserPreferenceDatastore(dataStore)
+                val instance = UserPreferenceDatastore(contex)
                 INSTANCE = instance
                 instance
             }

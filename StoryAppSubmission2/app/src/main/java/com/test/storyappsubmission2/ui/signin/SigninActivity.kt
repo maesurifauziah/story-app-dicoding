@@ -2,43 +2,36 @@ package com.test.storyappsubmission2.ui.signin
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import com.test.storyappsubmission2.R
-import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.databinding.ActivitySigninBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.main.MainActivity
 import com.test.storyappsubmission2.ui.signup.SignupActivity
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "User")
-
 class SigninActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySigninBinding
-    private lateinit var signinViewModel: SigninViewModel
+
+    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+    private val signinViewModel: SigninViewModel by viewModels {
+        factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupView()
-        setupViewModel()
-        setupAction()
+        supportActionBar?.hide()
         playAnimation()
+        setupAction()
 
         binding.haveAccountTextView.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
@@ -61,86 +54,6 @@ class SigninActivity : AppCompatActivity() {
             playSequentially(tvSignin, ivSignin, tvLoginEmail, edLoginEmail, tvEdLoginPassword, edLoginPassword, haveAccountTextView, signin, copyrightTextView)
             startDelay = 500
         }.start()
-    }
-
-    private fun setupView() {
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            window.insetsController?.hide(WindowInsets.Type.statusBars())
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-        }
-        supportActionBar?.hide()
-    }
-
-    private fun setupViewModel() {
-        signinViewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferenceDatastore.getInstance(dataStore))
-        )[SigninViewModel::class.java]
-
-        signinViewModel.let { vmsignin ->
-            vmsignin.signinResult.observe(this) { signin ->
-                // success signin process triggered -> save preferences
-                vmsignin.saveUser(
-                    signin.loginResult.name,
-                    signin.loginResult.userId,
-                    signin.loginResult.token
-                )
-
-            }
-            vmsignin.message.observe(this) { message ->
-                if (message == "200") {
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle(R.string.info)
-                    builder.setMessage(R.string.validate_login_success)
-                    builder.setIcon(R.drawable.ic_baseline_check_green_24)
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.setCancelable(false)
-                    alertDialog.show()
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        alertDialog.dismiss()
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
-                        finish()
-                    }, 2000)
-                }
-            }
-            vmsignin.error.observe(this) { error ->
-                if (error == "400") {
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle(R.string.info)
-                    builder.setMessage(R.string.label_invalid_email)
-                    builder.setIcon(R.drawable.ic_baseline_close_red_24)
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.setCancelable(false)
-                    alertDialog.show()
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        alertDialog.dismiss()
-                    }, 2000)
-                }
-                if (error == "401") {
-                    val builder = AlertDialog.Builder(this)
-                    builder.setTitle(R.string.info)
-                    builder.setMessage(R.string.login_user_not_found)
-                    builder.setIcon(R.drawable.ic_baseline_close_red_24)
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.setCancelable(false)
-                    alertDialog.show()
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        alertDialog.dismiss()
-                    }, 2000)
-                }
-            }
-            vmsignin.isLoading.observe(this) {
-                showLoading(it)
-            }
-        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -167,7 +80,60 @@ class SigninActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    signinViewModel.signin(email, password)
+                    signinViewModel.signin(email, password).observe(this){ result ->
+                        val data = result.loginResult
+                        if (data != null) {
+                            signinViewModel.saveUser(data.name, data.userId, data.token)
+                            if (result.error) {
+                                if (result.message == "400") {
+                                    val builder = AlertDialog.Builder(this)
+                                    builder.setTitle(R.string.info)
+                                    builder.setMessage(R.string.label_invalid_email)
+                                    builder.setIcon(R.drawable.ic_baseline_close_red_24)
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        alertDialog.dismiss()
+                                    }, 2000)
+                                }
+                                if (result.message == "401") {
+                                    val builder = AlertDialog.Builder(this)
+                                    builder.setTitle(R.string.info)
+                                    builder.setMessage(R.string.login_user_not_found)
+                                    builder.setIcon(R.drawable.ic_baseline_close_red_24)
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        alertDialog.dismiss()
+                                    }, 2000)
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(this)
+                                builder.setTitle(R.string.info)
+                                builder.setMessage(result.message)
+                                builder.setIcon(R.drawable.ic_baseline_check_green_24)
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    alertDialog.dismiss()
+                                    val intent = Intent(this, MainActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    startActivity(intent)
+                                    finish()
+                                }, 2000)
+                            }
+                        }
+
+                        if (result.message == "") {
+                            showLoading(true)
+                        } else {
+                            showLoading(false)
+                        }
+                    }
                 }
             }
         }
