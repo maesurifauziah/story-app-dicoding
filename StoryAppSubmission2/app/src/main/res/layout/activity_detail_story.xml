@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.detailstory.DetailStoryActivity">
 
-
     <ImageView
         android:id="@+id/avatar"
         android:layout_width="35dp"
@@ -21,10 +20,10 @@
 
     <TextView
         android:id="@+id/tv_detail_name"
-        android:layout_width="301dp"
-        android:layout_height="30dp"
+        android:layout_width="328dp"
+        android:layout_height="31dp"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/name"
         android:textAlignment="viewStart"
@@ -35,11 +34,40 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/avatar2"
+        android:layout_width="18dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintEnd_toStartOf="@+id/tv_detail_location"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        app:srcCompat="@drawable/ic_pin" />
+
+    <TextView
+        android:id="@+id/tv_detail_location"
+        android:layout_width="350dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="18dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/name"
+        android:textAlignment="viewStart"
+        android:textColor="@color/gray_dark_middle"
+        android:textSize="12sp"
+        android:transitionName="user_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
+
+    <ImageView
         android:id="@+id/iv_detail_photo"
         android:layout_width="375dp"
         android:layout_height="230dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/camera"
         android:scaleType="centerCrop"
@@ -47,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_detail_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_detail_location"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 

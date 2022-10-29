@@ -34,6 +34,6 @@
     <string name="failed_bring_up_camera">Gagal memunculkan kamera.</string>
     <string name="info">Informasi</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="list_location">List Location</string>
-    <string name="my_place">My Place</string>
+    <string name="list_location">Daftar Lokasi</string>
+    <string name="my_place">Tempatku</string>
 </resources>

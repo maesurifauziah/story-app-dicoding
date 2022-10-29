@@ -98,7 +98,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         getMyLastLocation()
     }
 
-    private fun getAddressName(lat: Double, lon: Double): String? {
+    fun getAddressName(lat: Double, lon: Double): String? {
         var addressName: String? = null
         val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
         try {
