@@ -106,12 +106,6 @@ class RemoteDataSource {
     }
 
     fun getListStory(callback: GetListStoryCallback, token: String){
-        val storyResponse = StoryResponse(
-            null,
-            true,
-            ""
-        )
-        callback.onStoryLoad(storyResponse)
         val client = ApiConfig.getApiService().getListStory(bearer = "Bearer $token")
         client.enqueue(object : Callback<StoryResponse>{
             override fun onResponse(
@@ -205,14 +199,14 @@ class RemoteDataSource {
                 response: Response<StoryResponse>
             ) {
                 if (response.isSuccessful){
-                    response.body()?.let { callback.onStoryMapLoad(it) }
+                    response.body()?.let { callback.onMapsStoryLoad(it) }
                 }else{
                     val storyResponse = StoryResponse(
                         null,
                         true,
                         "Load Failed!"
                     )
-                    callback.onStoryMapLoad(storyResponse)
+                    callback.onMapsStoryLoad(storyResponse)
                 }
             }
 
@@ -222,7 +216,7 @@ class RemoteDataSource {
                     true,
                     t.message.toString()
                 )
-                callback.onStoryMapLoad(storyResponse)
+                callback.onMapsStoryLoad(storyResponse)
             }
         })
     }
@@ -240,12 +234,12 @@ class RemoteDataSource {
         fun onStoryLoad(storyResponse: StoryResponse)
     }
 
-    interface AddNewStoryCallback{
-        fun onAddStory(addStoryResponse: AddStoryResponse)
+    interface GetListMapsStoryCallback{
+        fun onMapsStoryLoad(storyResponse: StoryResponse)
     }
 
-    interface GetListMapsStoryCallback{
-        fun onStoryMapLoad(storyMap: StoryResponse)
+    interface AddNewStoryCallback{
+        fun onAddStory(addStoryResponse: AddStoryResponse)
     }
 
     companion object {

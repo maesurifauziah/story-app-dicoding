@@ -72,7 +72,6 @@ class AddNewStoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.add_story)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -104,11 +103,6 @@ class AddNewStoryActivity : AppCompatActivity() {
                 Toast.makeText(this@AddNewStoryActivity, getString(R.string.image_mandatory), Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 
     private fun showLoading(isLoading: Boolean) {

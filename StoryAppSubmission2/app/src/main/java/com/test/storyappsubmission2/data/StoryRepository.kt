@@ -68,15 +68,15 @@ class StoryRepository(
         return uploadResponseStatus
     }
 
-
     override fun getListMapsStory(token: String): LiveData<StoryResponse> {
-        val storyResponse = MutableLiveData<StoryResponse>()
-        remoteDataSource.getListMapsStory(object : RemoteDataSource.GetListMapsStoryCallback{
-            override fun onStoryMapLoad(storyMap: StoryResponse) {
-                storyResponse.postValue(storyMap)
+        val storyResponse2 = MutableLiveData<StoryResponse>()
+        remoteDataSource.getListMapsStory(object: RemoteDataSource.GetListMapsStoryCallback{
+            override fun onMapsStoryLoad(storyResponse: StoryResponse) {
+                storyResponse2.postValue(storyResponse)
             }
-        }, token)
-        return storyResponse
+
+        },token)
+        return storyResponse2
     }
 
 

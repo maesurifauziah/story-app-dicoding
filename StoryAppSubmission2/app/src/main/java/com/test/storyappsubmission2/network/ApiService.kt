@@ -13,7 +13,7 @@ import retrofit2.http.*
 interface ApiService {
     @GET("v1/stories")
     fun getListStory(
-        @Header("Authorization") bearer: String?,
+        @Header("Authorization") bearer: String?
     ): Call<StoryResponse>
 
     @Multipart
