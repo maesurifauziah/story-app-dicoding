@@ -53,6 +53,7 @@ class StoryAdapter(private val listReview: List<ListStoryItem>) : RecyclerView.A
                 intent.putExtra(DetailStoryActivity.LONGITUDE, if (data.lon == null) "" else data.lon.toString())
                 intent.putExtra(DetailStoryActivity.LATITUDE, if (data.lat == null) "" else data.lat.toString())
 
+
                 val optionsCompat: ActivityOptionsCompat =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
                         itemView.context as Activity,

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.marginTop
 import com.bumptech.glide.Glide
 import com.test.storyappsubmission2.R
 import com.test.storyappsubmission2.databinding.ActivityDetailStoryBinding
@@ -39,9 +40,9 @@ class DetailStoryActivity : AppCompatActivity() {
         val name = intent.getStringExtra(NAME)
         val create_at = intent.getStringExtra(CREATE_AT)
         val description = intent.getStringExtra(DESCRIPTION)
-        val lon = intent.getStringExtra(LONGITUDE)
-        val lat = intent.getStringExtra(LATITUDE)
-        val location = getAddressName(lat!!.toDouble(), lon!!.toDouble())
+        val lon = intent.getStringExtra(LONGITUDE)!!.toDouble()
+        val lat = intent.getStringExtra(LATITUDE)!!.toDouble()
+        val location = getAddressName(lat, lon)
 
         Glide.with(binding.root.context)
             .load(photoUrl)
@@ -51,7 +52,13 @@ class DetailStoryActivity : AppCompatActivity() {
         binding.tvDetailDescription.text = description
         binding.tvDetailLocation.text = location
 
+        if (lon == 0.0 && lat == 0.0) {
+            binding.avatar2.visibility = View.INVISIBLE
+        } else {
+            binding.avatar2.visibility = View.VISIBLE
+        }
     }
+
     fun getAddressName(lat: Double, lon: Double): String? {
         var addressName: String? = null
         val geocoder = Geocoder(this@DetailStoryActivity)
