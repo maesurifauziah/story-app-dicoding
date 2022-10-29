@@ -16,6 +16,7 @@ import com.test.storyappsubmission2.data.remote.response.ListStoryItem
 import com.test.storyappsubmission2.databinding.ActivityMainBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.addstory.AddNewStoryActivity
+import com.test.storyappsubmission2.ui.map.MapsActivity
 import com.test.storyappsubmission2.ui.signin.SigninActivity
 import com.test.storyappsubmission2.ui.signin.SigninViewModel
 
@@ -44,25 +45,23 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }else{
-                mainViewModel.getListStory(user.token).observe(this){
+                mainViewModel.getListMapsStory(user.token).observe(this){
                     it.listStory?.let { it1 -> setReviewData(it1) }
                 }
             }
         }
-
-//        mainViewModel.getListStory("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWhNVXNpNXg0WDJSWWduMUwiLCJpYXQiOjE2NjY5NDE5NTR9.dVXJVjp4qEZcAi1muwBKlcK19TkgG8sJPK0s7RqoKIE").observe(this){
-//            setReviewData(it.listStory)
-//        }
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvListStory.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvListStory.addItemDecoration(itemDecoration)
 
-
-
         binding.btnAddStory.setOnClickListener {
             val i = Intent(this@MainActivity, AddNewStoryActivity::class.java)
+            startActivity(i)
+        }
+        binding.btnGotoMap.setOnClickListener {
+            val i = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(i)
         }
     }

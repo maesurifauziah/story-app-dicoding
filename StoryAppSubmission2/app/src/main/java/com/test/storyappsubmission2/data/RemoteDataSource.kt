@@ -106,6 +106,12 @@ class RemoteDataSource {
     }
 
     fun getListStory(callback: GetListStoryCallback, token: String){
+        val storyResponse = StoryResponse(
+            null,
+            true,
+            ""
+        )
+        callback.onStoryLoad(storyResponse)
         val client = ApiConfig.getApiService().getListStory(bearer = "Bearer $token")
         client.enqueue(object : Callback<StoryResponse>{
             override fun onResponse(
@@ -191,6 +197,36 @@ class RemoteDataSource {
         })
     }
 
+    fun getListMapsStory(callback: GetListMapsStoryCallback, token: String){
+        val client = ApiConfig.getApiService().getListMapsStory(bearer = "Bearer $token")
+        client.enqueue(object : Callback<StoryResponse>{
+            override fun onResponse(
+                call: Call<StoryResponse>,
+                response: Response<StoryResponse>
+            ) {
+                if (response.isSuccessful){
+                    response.body()?.let { callback.onStoryMapLoad(it) }
+                }else{
+                    val storyResponse = StoryResponse(
+                        null,
+                        true,
+                        "Load Failed!"
+                    )
+                    callback.onStoryMapLoad(storyResponse)
+                }
+            }
+
+            override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
+                val storyResponse = StoryResponse(
+                    null,
+                    true,
+                    t.message.toString()
+                )
+                callback.onStoryMapLoad(storyResponse)
+            }
+        })
+    }
+
 
     interface SigninCallback{
         fun onSignin(signinResponse: SignInResponse)
@@ -206,6 +242,10 @@ class RemoteDataSource {
 
     interface AddNewStoryCallback{
         fun onAddStory(addStoryResponse: AddStoryResponse)
+    }
+
+    interface GetListMapsStoryCallback{
+        fun onStoryMapLoad(storyMap: StoryResponse)
     }
 
     companion object {

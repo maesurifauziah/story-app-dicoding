@@ -10,4 +10,5 @@ interface AppDataSource {
     fun signup(name: String, email: String, password: String): LiveData<SignUpResponse>
     fun getListStory(token: String): LiveData<StoryResponse>
     fun postNewStory(token: String, imageFile: File, desc: String): LiveData<AddStoryResponse>
+    fun getListMapsStory(token: String): LiveData<StoryResponse>
 }

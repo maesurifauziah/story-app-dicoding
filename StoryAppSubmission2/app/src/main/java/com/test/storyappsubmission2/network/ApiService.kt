@@ -13,7 +13,7 @@ import retrofit2.http.*
 interface ApiService {
     @GET("v1/stories")
     fun getListStory(
-        @Header("Authorization") bearer: String?
+        @Header("Authorization") bearer: String?,
     ): Call<StoryResponse>
 
     @Multipart
@@ -38,4 +38,10 @@ interface ApiService {
         @Field("email") email: String?,
         @Field("password") password: String?
     ): Call<SignInResponse>
+
+    @GET("/v1/stories")
+    fun getListMapsStory(
+        @Header("Authorization") bearer: String?,
+        @Query("location") page: Int = 1,
+    ): Call<StoryResponse>
 }

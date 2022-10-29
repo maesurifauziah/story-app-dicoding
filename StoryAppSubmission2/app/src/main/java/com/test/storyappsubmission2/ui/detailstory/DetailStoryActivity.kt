@@ -24,6 +24,7 @@ class DetailStoryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.detail_story)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val photoUrl = intent.getStringExtra(PHOTO_URL)
         val name = intent.getStringExtra(NAME)
@@ -37,5 +38,9 @@ class DetailStoryActivity : AppCompatActivity() {
         binding.tvDetailCreatedTime.text = create_at?.withDateFormat()
         binding.tvDetailDescription.text = description
 
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

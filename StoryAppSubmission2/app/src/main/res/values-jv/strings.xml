@@ -33,4 +33,6 @@
     <string name="failed_take_picture">写真を撮れませんでした.</string>
     <string name="failed_bring_up_camera">カメラの起動に失敗しました.</string>
     <string name="info">情報</string>
+    <string name="list_location">List Location</string>
+    <string name="my_place">My Place</string>
 </resources>

@@ -69,6 +69,17 @@ class StoryRepository(
     }
 
 
+    override fun getListMapsStory(token: String): LiveData<StoryResponse> {
+        val storyResponse = MutableLiveData<StoryResponse>()
+        remoteDataSource.getListMapsStory(object : RemoteDataSource.GetListMapsStoryCallback{
+            override fun onStoryMapLoad(storyMap: StoryResponse) {
+                storyResponse.postValue(storyMap)
+            }
+        }, token)
+        return storyResponse
+    }
+
+
     companion object {
         @Volatile
         private var instance: StoryRepository? = null

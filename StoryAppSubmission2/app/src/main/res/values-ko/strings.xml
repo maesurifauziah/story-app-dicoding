@@ -33,4 +33,6 @@
     <string name="failed_take_picture">사진을 찍지 못했습니다.</string>
     <string name="failed_bring_up_camera">카메라를 불러오지 못했습니다.</string>
     <string name="info">정보</string>
+    <string name="list_location">List Location</string>
+    <string name="my_place">My Place</string>
 </resources>

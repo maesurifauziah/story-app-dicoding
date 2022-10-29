@@ -33,4 +33,6 @@
     <string name="failed_take_picture">Failed to take picture.</string>
     <string name="failed_bring_up_camera">Failed to bring up camera.</string>
     <string name="info">Information</string>
+    <string name="list_location">List Location</string>
+    <string name="my_place">My Place</string>
 </resources>

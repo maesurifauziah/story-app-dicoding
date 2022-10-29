@@ -26,4 +26,6 @@ class MainViewModel(private val repo: StoryRepository) : ViewModel() {
 
     fun postNewStory(token: String, imageFile: File, desc: String) = repo.postNewStory(token, imageFile, desc)
 
+    fun getListMapsStory(token: String) = repo.getListMapsStory(token)
+
 }
