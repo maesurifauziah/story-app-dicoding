@@ -135,7 +135,7 @@ class RemoteDataSource {
         })
     }
 
-    fun postNewStory(callback: AddNewStoryCallback, token: String, imageFile: File, desc: String){
+    fun postNewStory(callback: AddNewStoryCallback, token: String, imageFile: File, desc: String, lon: String? = null, lat: String? = null){
         callback.onAddStory(
             addStoryResponse = AddStoryResponse(
                 true,
@@ -144,13 +144,15 @@ class RemoteDataSource {
         )
 
         val description = desc.toRequestBody("text/plain".toMediaType())
+        val latitude = lat?.toRequestBody("text/plain".toMediaType())
+        val logitude = lon?.toRequestBody("text/plain".toMediaType())
         val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
             "photo",
             imageFile.name,
             requestImageFile
         )
-        val client = ApiConfig.getApiService().postNewStory(bearer = "Bearer $token", imageMultipart, description)
+        val client = ApiConfig.getApiService().postNewStory(bearer = "Bearer $token", imageMultipart, description, latitude!!, logitude!!)
 
         client.enqueue(object : Callback<AddStoryResponse>{
             override fun onResponse(
@@ -160,7 +162,13 @@ class RemoteDataSource {
                 if (response.isSuccessful){
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error){
-                        callback.onAddStory(responseBody)
+//                        callback.onAddStory(responseBody)
+                        callback.onAddStory(
+                            addStoryResponse = AddStoryResponse(
+                                true,
+                                "$latitude!!, $logitude!!"
+                            )
+                        )
                     }else{
                         callback.onAddStory(
                             addStoryResponse = AddStoryResponse(

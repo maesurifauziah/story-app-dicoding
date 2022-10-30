@@ -1,19 +1,14 @@
 package com.test.storyappsubmission2.ui.detailstory
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
-import android.content.Context
-import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.view.marginTop
 import com.bumptech.glide.Glide
 import com.test.storyappsubmission2.R
 import com.test.storyappsubmission2.databinding.ActivityDetailStoryBinding
+import com.test.storyappsubmission2.utils.getAddressName
 import com.test.storyappsubmission2.utils.withDateFormat
-import java.io.IOException
 import java.util.*
 
 
@@ -42,7 +37,7 @@ class DetailStoryActivity : AppCompatActivity() {
         val description = intent.getStringExtra(DESCRIPTION)
         val lon = intent.getStringExtra(LONGITUDE)!!.toDouble()
         val lat = intent.getStringExtra(LATITUDE)!!.toDouble()
-        val location = getAddressName(lat, lon)
+        val location = getAddressName(this@DetailStoryActivity, lat, lon)
 
         Glide.with(binding.root.context)
             .load(photoUrl)
@@ -59,33 +54,6 @@ class DetailStoryActivity : AppCompatActivity() {
         }
     }
 
-    fun getAddressName(lat: Double, lon: Double): String? {
-        var addressName: String? = null
-        val geocoder = Geocoder(this@DetailStoryActivity)
-        try {
-            val list = geocoder.getFromLocation(lat, lon, 1)
-            if (list != null && list.size != 0) {
-                addressName = list[0].getAddressLine(0)
-                Log.d(ContentValues.TAG, "getAddressName: $addressName")
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return addressName
-    }
-//    fun getAddressName(context: Context, lat: Double, lon: Double): String {
-//        val geocoder = Geocoder(context)
-//        val geoLocation =
-//            geocoder.getFromLocation(lat, lon, 1)
-//        return if (geoLocation.size > 0) {
-//            val location = geoLocation[0]
-//            val fullAddress = location.getAddressLine(0)
-//            StringBuilder("📌 ")
-//                .append(fullAddress).toString()
-//        } else {
-//            "📌 Location Unknown"
-//        }
-//    }
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

@@ -9,6 +9,6 @@ interface AppDataSource {
     fun signin(email: String, password: String): LiveData<SignInResponse>
     fun signup(name: String, email: String, password: String): LiveData<SignUpResponse>
     fun getListStory(token: String): LiveData<StoryResponse>
-    fun postNewStory(token: String, imageFile: File, desc: String): LiveData<AddStoryResponse>
+    fun postNewStory(token: String, imageFile: File, desc: String, lon: String?, lat: String?): LiveData<AddStoryResponse>
     fun getListMapsStory(token: String): LiveData<StoryResponse>
 }

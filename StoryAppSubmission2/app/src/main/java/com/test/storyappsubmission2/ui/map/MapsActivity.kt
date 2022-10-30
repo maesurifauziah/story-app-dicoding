@@ -2,13 +2,10 @@ package com.test.storyappsubmission2.ui.map
 
 import android.Manifest
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
-import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,11 +13,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.DrawableCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -31,14 +27,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.test.storyappsubmission2.R
 import com.test.storyappsubmission2.data.remote.response.ListStoryItem
-import com.test.storyappsubmission2.data.remote.response.StoryResponse
 import com.test.storyappsubmission2.databinding.ActivityMapsBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.main.MainViewModel
-import com.test.storyappsubmission2.ui.signin.SigninActivity
 import com.test.storyappsubmission2.ui.signin.SigninViewModel
-import java.io.IOException
-import java.util.*
+import com.test.storyappsubmission2.utils.getAddressName
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -92,25 +85,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun addManyMarker(stories : List<ListStoryItem>){
         stories.forEach {storyMap ->
             val latLng = LatLng(storyMap.lat, storyMap.lon)
-            val addressName = getAddressName(storyMap.lat, storyMap.lon)
-            mMap.addMarker(MarkerOptions().position(latLng).title(storyMap.name).snippet(addressName))
+            val addressName = getAddressName(this@MapsActivity,storyMap.lat, storyMap.lon)
+            mMap.addMarker(MarkerOptions()
+                .position(latLng)
+                .title(storyMap.name)
+                .snippet(addressName)
+            )
         }
         getMyLastLocation()
-    }
-
-    fun getAddressName(lat: Double, lon: Double): String? {
-        var addressName: String? = null
-        val geocoder = Geocoder(this@MapsActivity, Locale.getDefault())
-        try {
-            val list = geocoder.getFromLocation(lat, lon, 1)
-            if (list != null && list.size != 0) {
-                addressName = list[0].getAddressLine(0)
-                Log.d(TAG, "getAddressName: $addressName")
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return addressName
     }
 
     private val requestPermissionLauncher =
@@ -144,6 +126,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 if (location != null) {
                     showStartMarker(location)
+
                 } else {
                     Toast.makeText(
                         this@MapsActivity,
@@ -161,9 +144,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             )
         }
     }
+
     private fun showStartMarker(location: Location) {
         val startLocation = LatLng(location.latitude, location.longitude)
-        val addressName = getAddressName(location.latitude, location.longitude)
+        val addressName = getAddressName(this@MapsActivity, location.latitude, location.longitude)
         mMap.addMarker(
             MarkerOptions()
                 .position(startLocation)
@@ -171,18 +155,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .snippet(addressName)
                 .icon(vectorToBitmap(R.drawable.my_house))
         )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLocation, 17f))
-        boundsBuilder.include(startLocation)
-        val bounds: LatLngBounds = boundsBuilder.build()
-        mMap.animateCamera(
-            CameraUpdateFactory.newLatLngBounds(
-                bounds,
-                resources.displayMetrics.widthPixels,
-                resources.displayMetrics.heightPixels,
-                300
-            )
-        )
-
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLocation, 8f))
     }
 
     private fun vectorToBitmap(@DrawableRes id: Int): BitmapDescriptor {
@@ -198,7 +171,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         val canvas = Canvas(bitmap)
         vectorDrawable.setBounds(0, 0, canvas.width, canvas.height)
-//        DrawableCompat.setTint(vectorDrawable, color)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }

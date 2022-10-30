@@ -57,14 +57,14 @@ class StoryRepository(
         return storyResponse2
     }
 
-    override fun postNewStory(token: String, imageFile: File, desc: String): LiveData<AddStoryResponse> {
+    override fun postNewStory(token: String, imageFile: File, desc: String, lon: String?, lat: String?): LiveData<AddStoryResponse> {
         val uploadResponseStatus = MutableLiveData<AddStoryResponse>()
 
         remoteDataSource.postNewStory(object : RemoteDataSource.AddNewStoryCallback{
             override fun onAddStory(addStoryResponse: AddStoryResponse) {
                 uploadResponseStatus.postValue(addStoryResponse)
             }
-        }, token, imageFile, desc)
+        }, token, imageFile, desc, lon, lat)
         return uploadResponseStatus
     }
 

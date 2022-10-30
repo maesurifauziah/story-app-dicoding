@@ -2,12 +2,16 @@ package com.test.storyappsubmission2.utils
 
 import android.app.Application
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.test.storyappsubmission2.R
 import java.io.*
 import java.text.DateFormat
@@ -93,6 +97,22 @@ fun String.withDateFormat(): String {
     val date = format.parse(this) as Date
     return DateFormat.getDateInstance(DateFormat.FULL).format(date)
 }
+
+fun getAddressName(context: Context, lat: Double, lon: Double): String? {
+    var addressName: String? = null
+    val geocoder = Geocoder(context, Locale.getDefault())
+    try {
+        val list = geocoder.getFromLocation(lat, lon, 1)
+        if (list != null && list.size != 0) {
+            addressName = list[0].getAddressLine(0)
+            Log.d(ContentValues.TAG, "getAddressName: $addressName")
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return addressName
+}
+
 
 
 

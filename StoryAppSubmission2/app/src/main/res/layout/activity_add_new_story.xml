@@ -54,6 +54,45 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_add_img" />
 
+        <Button
+            android:id="@+id/button_set_location"
+            android:layout_width="360dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppins_medium"
+            android:includeFontPadding="false"
+            android:text="@string/set_location"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_add_camera"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btn_add_camera"
+            app:layout_constraintTop_toBottomOf="@+id/btn_add_camera"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/avatar2"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_location"
+            app:layout_constraintHorizontal_bias="0.813"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_set_location"
+            app:srcCompat="@drawable/ic_pin" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="311dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_set_location" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ed_add_description_layout"
             android:layout_width="360dp"
@@ -68,7 +107,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_add_galery">
+            app:layout_constraintTop_toBottomOf="@+id/tv_location">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ed_add_description"
@@ -76,14 +115,15 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="top"
-                android:hint="@string/description"/>
+                android:hint="@string/description" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ProgressBar
             android:id="@+id/progressBarAdd"
             style="?android:attr/horizontalScrollViewStyle"
-            android:layout_width="243dp"
-            android:layout_height="169dp"
+            android:layout_width="265dp"
+            android:layout_height="220dp"
+            android:elevation="2dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,9 +144,13 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/ed_add_description_layout"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/ed_add_description_layout"
-            app:layout_constraintTop_toBottomOf="@+id/ed_add_description_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_add_description_layout"
+            app:layout_constraintVertical_bias="0.16" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

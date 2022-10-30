@@ -36,4 +36,5 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="list_location">목록 위치</string>
     <string name="my_place">마이 플레이스</string>
+    <string name="set_location">Set Location</string>
 </resources>
