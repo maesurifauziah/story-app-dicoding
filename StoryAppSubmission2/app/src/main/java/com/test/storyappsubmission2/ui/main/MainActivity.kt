@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.dashboard_story)
 
+        val adapter = StoryAdapter()
 
         signinViewModel.getUser().observe(this){user->
             if (user.userId.isEmpty()){
@@ -45,15 +46,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }else{
+                binding.rvListStory.adapter = adapter
                 mainViewModel.getListStory(user.token).observe(this){
-                    it.listStory?.let { it1 -> setReviewData(it1) }
+                    it.listStory?.let { it1 -> adapter.submitList(it1) }
                 }
             }
         }
-
-//        mainViewModel.getListStory("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWhNVXNpNXg0WDJSWWduMUwiLCJpYXQiOjE2NjY5NDE5NTR9.dVXJVjp4qEZcAi1muwBKlcK19TkgG8sJPK0s7RqoKIE").observe(this){
-//            setReviewData(it.listStory)
-//        }
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvListStory.layoutManager = layoutManager
@@ -89,11 +87,6 @@ class MainActivity : AppCompatActivity() {
 
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun setReviewData(listStory: List<ListStoryItem>?) {
-        val adapter = StoryAdapter(listStory as ArrayList<ListStoryItem>)
-        binding.rvListStory.adapter = adapter
     }
 
     private fun showLoading(isLoading: Boolean) {
