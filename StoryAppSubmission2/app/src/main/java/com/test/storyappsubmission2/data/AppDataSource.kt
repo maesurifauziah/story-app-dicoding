@@ -2,7 +2,6 @@ package com.test.storyappsubmission2.data
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
 import com.test.storyappsubmission2.data.remote.response.*
 import java.io.File
 

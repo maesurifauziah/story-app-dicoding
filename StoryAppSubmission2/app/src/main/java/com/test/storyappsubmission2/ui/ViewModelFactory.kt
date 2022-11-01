@@ -36,23 +36,3 @@ class ViewModelFactory(private val repo: StoryRepository) : ViewModelProvider.Ne
             }.also { instance = it }
     }
 }
-
-//class ViewModelFactory private constructor(private val repo: StoryRepository) :
-//    ViewModelProvider.NewInstanceFactory() {
-//    @Suppress("UNCHECKED_CAST")
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(SigninViewModel::class.java)) {
-//            return SigninViewModel(repo) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
-//    }
-//
-//    companion object {
-//        @Volatile
-//        private var instance: ViewModelFactory? = null
-//        fun getInstance(context: Context, dataStore: DataStore<Preferences>): ViewModelFactory =
-//            instance ?: synchronized(this) {
-//                instance ?: ViewModelFactory(Injection.provideRepository(context, dataStore))
-//            }.also { instance = it }
-//    }
-//}

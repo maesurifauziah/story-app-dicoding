@@ -1,17 +1,14 @@
 package com.test.storyappsubmission2.data
 
-import android.util.Log
-import androidx.lifecycle.asLiveData
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.data.remote.response.ListStoryItem
-import com.test.storyappsubmission2.data.remote.response.StoryResponse
 import com.test.storyappsubmission2.network.ApiService
 import kotlinx.coroutines.flow.first
 
 class StoryPagingSource (
-    private val api: ApiService,
+    private val apiServicePaging: ApiService,
     private val dataStoreRepository: UserPreferenceDatastore
 ) : PagingSource<Int, ListStoryItem>() {
 
@@ -26,25 +23,24 @@ class StoryPagingSource (
         val position = params.key ?: INITIAL_PAGE_INDEX
 
         return try {
-            var token = dataStoreRepository.getUser().first()
+            val token = dataStoreRepository.getUser().first()
             val userToken = "Bearer ${token.token}"
             val queryParam = HashMap<String, Int>()
             queryParam["page"] = position
             queryParam["size"] = params.loadSize
             queryParam["location"] = 0
 
-            val responseData = api.getListStory(userToken, queryParam)
+            val responseData = apiServicePaging.getListStory(userToken, queryParam)
             LoadResult.Page(
                 data = responseData.listStory,
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-                nextKey = if (responseData.listStory.isNullOrEmpty()) null else position + 1
+                nextKey = if (responseData.listStory.isEmpty()) null else position + 1
             )
         } catch (e: Exception) { return LoadResult.Error(e) }
     }
 
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
-        val TAG: String = StoryPagingSource::class.java.simpleName
     }
 
 }

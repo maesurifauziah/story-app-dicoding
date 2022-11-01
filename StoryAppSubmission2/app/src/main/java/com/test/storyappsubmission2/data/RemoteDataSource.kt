@@ -105,12 +105,6 @@ class RemoteDataSource {
         })
     }
 
-
-//    fun getListStory(callback: GetListStoryCallback, token: String): StoryResponse {
-//        val client = ApiConfig.getApiService().getListStory(bearer = "Bearer $token")
-//        return client
-//    }
-
     fun postNewStory(callback: AddNewStoryCallback, token: String, imageFile: File, desc: String, lon: String? = null, lat: String? = null){
         callback.onAddStory(
             addStoryResponse = AddStoryResponse(
@@ -212,10 +206,6 @@ class RemoteDataSource {
 
     interface SignupCallback{
         fun onSignup(signupResponse: SignUpResponse)
-    }
-
-    interface GetListStoryCallback{
-        fun onStoryLoad(storyResponse: StoryResponse)
     }
 
     interface GetListMapsStoryCallback{

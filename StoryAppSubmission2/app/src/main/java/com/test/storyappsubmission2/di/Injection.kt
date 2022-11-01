@@ -1,8 +1,6 @@
 package com.test.storyappsubmission2.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import com.test.storyappsubmission2.data.RemoteDataSource
 import com.test.storyappsubmission2.data.StoryRepository
 import com.test.storyappsubmission2.data.local.UserPreferenceDatastore

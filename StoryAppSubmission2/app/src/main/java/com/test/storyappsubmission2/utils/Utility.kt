@@ -11,7 +11,6 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.test.storyappsubmission2.R
 import java.io.*
 import java.text.DateFormat
@@ -28,11 +27,6 @@ val timeStamp: String = SimpleDateFormat(
 
 // Untuk kasus Intent Camera
 fun createCustomTempFile(context: Context): File {
-    val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    return File.createTempFile(timeStamp, ".jpg", storageDir)
-}
-
-fun createTempFile(context: Context): File {
     val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     return File.createTempFile(timeStamp, ".jpg", storageDir)
 }

@@ -33,7 +33,7 @@ class DetailStoryActivity : AppCompatActivity() {
 
         val photoUrl = intent.getStringExtra(PHOTO_URL)
         val name = intent.getStringExtra(NAME)
-        val create_at = intent.getStringExtra(CREATE_AT)
+        val createAt = intent.getStringExtra(CREATE_AT)
         val description = intent.getStringExtra(DESCRIPTION)
         val lon = intent.getStringExtra(LONGITUDE)!!.toDouble()
         val lat = intent.getStringExtra(LATITUDE)!!.toDouble()
@@ -43,7 +43,7 @@ class DetailStoryActivity : AppCompatActivity() {
             .load(photoUrl)
             .into(binding.ivDetailPhoto)
         binding.tvDetailName.text = name
-        binding.tvDetailCreatedTime.text = create_at?.withDateFormat()
+        binding.tvDetailCreatedTime.text = createAt?.withDateFormat()
         binding.tvDetailDescription.text = description
         binding.tvDetailLocation.text = location
 

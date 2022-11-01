@@ -1,10 +1,8 @@
 package com.test.storyappsubmission2.ui.main
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Debug
 import android.provider.Settings
 import android.util.Log
 import android.view.Menu
@@ -15,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.storyappsubmission2.R
 import com.test.storyappsubmission2.adapter.LoadingStateAdapter
-import com.test.storyappsubmission2.data.remote.response.ListStoryItem
 import com.test.storyappsubmission2.databinding.ActivityMainBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
 import com.test.storyappsubmission2.ui.addstory.AddNewStoryActivity
@@ -43,6 +40,8 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = StoryAdapter()
 
+        showLoading(true)
+
         signinViewModel.getUser().observe(this){user->
             if (user.userId.isEmpty()){
                 val intent = Intent(this, SigninActivity::class.java)
@@ -57,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.getAllStory(user.token).observe(this) {
                     Log.e("List", it.toString())
                     adapter.submitData(lifecycle, it)
+                    showLoading(false)
                 }
             }
         }

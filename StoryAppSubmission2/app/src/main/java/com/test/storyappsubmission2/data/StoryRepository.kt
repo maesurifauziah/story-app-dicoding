@@ -51,15 +51,6 @@ class StoryRepository(
         return registerResponse
     }
 
-//    override fun getListStory(token: String): LiveData<PagingData<StoryResponse>> {
-//        val storyResponse2 = MutableLiveData<StoryResponse>()
-//        remoteDataSource.getListStory(object : RemoteDataSource.GetListStoryCallback{
-//            override fun onStoryLoad(storyResponse: StoryResponse) {
-//                storyResponse2.postValue(storyResponse)
-//            }
-//        }, token)
-//        return storyResponse2
-//    }
     override  fun getAllStory(token: String): LiveData<PagingData<ListStoryItem>> {
         return Pager(
             config = PagingConfig(
@@ -67,7 +58,7 @@ class StoryRepository(
             ),
             pagingSourceFactory = {
                 StoryPagingSource(
-                    api = apiService,
+                    apiServicePaging = apiService,
                     dataStoreRepository = pref
                 )
             }
