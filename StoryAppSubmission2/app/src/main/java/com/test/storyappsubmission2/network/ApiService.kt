@@ -42,9 +42,8 @@ interface ApiService {
         @Field("password") password: String?
     ): Call<SignInResponse>
 
-    @GET("/v1/stories")
+    @GET("/v1/stories?location=1")
     fun getListMapsStory(
-        @Header("Authorization") bearer: String?,
-        @Query("location") page: Int = 1,
+        @Header("Authorization") bearer: String?
     ): Call<StoryResponse>
 }
