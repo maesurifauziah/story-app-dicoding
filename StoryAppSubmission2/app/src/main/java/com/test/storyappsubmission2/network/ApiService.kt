@@ -12,9 +12,10 @@ import retrofit2.http.*
 
 interface ApiService {
     @GET("v1/stories")
-    fun getListStory(
-        @Header("Authorization") bearer: String?
-    ): Call<StoryResponse>
+    suspend fun getListStory(
+        @Header("Authorization") bearer: String?,
+        @QueryMap queries: Map<String, Int>,
+    ): StoryResponse
 
     @Multipart
     @POST("/v1/stories")

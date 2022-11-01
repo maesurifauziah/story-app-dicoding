@@ -78,7 +78,8 @@ class AddNewStoryActivity : AppCompatActivity() {
         binding = ActivityAddNewStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.title = getString(R.string.add_story)
+        supportActionBar?.title = getString(R.string.list_location)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -92,8 +93,8 @@ class AddNewStoryActivity : AppCompatActivity() {
         binding.btnAddGalery.setOnClickListener { startGallery() }
         binding.buttonSetLocation.setOnClickListener {
             mainViewModel.isLocation.postValue(true)
-            lon = mainViewModel.coordLon.value.toString()!!.toDouble()
-            lat = mainViewModel.coordLat.value.toString()!!.toDouble()
+            lon = mainViewModel.coordLon.value.toString().toDouble()
+            lat = mainViewModel.coordLat.value.toString().toDouble()
             val location = getAddressName(this@AddNewStoryActivity, lat, lon).toString()
             binding.tvLocation.text = location
         }
@@ -235,5 +236,9 @@ class AddNewStoryActivity : AppCompatActivity() {
     private fun postCoordinate(latitude: Double, longitude: Double) {
         mainViewModel.coordLat.postValue(latitude)
         mainViewModel.coordLon.postValue(longitude)
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

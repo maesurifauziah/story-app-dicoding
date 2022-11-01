@@ -37,4 +37,5 @@
     <string name="list_location">Daftar Lokasi</string>
     <string name="my_place">Tempatku</string>
     <string name="set_location">Set Location</string>
+    <string name="retry">Coba lagi</string>
 </resources>

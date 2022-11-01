@@ -37,4 +37,5 @@
     <string name="list_location">リストの場所</string>
     <string name="my_place">私の場所</string>
     <string name="set_location">Set Location</string>
+    <string name="retry">Coba lagi</string>
 </resources>

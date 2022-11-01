@@ -1,6 +1,10 @@
 package com.test.storyappsubmission2.data
 
 import androidx.lifecycle.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
 import com.test.storyappsubmission2.data.remote.response.*
 import com.test.storyappsubmission2.network.ApiService
@@ -12,7 +16,7 @@ class StoryRepository(
     private val remoteDataSource: RemoteDataSource
 ) : AppDataSource {
 
-    override fun getUser(): LiveData<SignInResult> {
+    override  fun getUser(): LiveData<SignInResult> {
         return pref.getUser().asLiveData()
     }
 
@@ -25,7 +29,7 @@ class StoryRepository(
     }
 
 
-    override fun signin(email: String, password: String): LiveData<SignInResponse> {
+    override  fun signin(email: String, password: String): LiveData<SignInResponse> {
         val signinResponse2 = MutableLiveData<SignInResponse>()
 
         remoteDataSource.signin(object : RemoteDataSource.SigninCallback{
@@ -36,7 +40,7 @@ class StoryRepository(
         return signinResponse2
     }
 
-    override fun signup(name: String, email: String, password: String): LiveData<SignUpResponse> {
+    override  fun signup(name: String, email: String, password: String): LiveData<SignUpResponse> {
         val registerResponse = MutableLiveData<SignUpResponse>()
 
         remoteDataSource.signup(object : RemoteDataSource.SignupCallback{
@@ -47,17 +51,32 @@ class StoryRepository(
         return registerResponse
     }
 
-    override fun getListStory(token: String): LiveData<StoryResponse> {
-        val storyResponse2 = MutableLiveData<StoryResponse>()
-        remoteDataSource.getListStory(object : RemoteDataSource.GetListStoryCallback{
-            override fun onStoryLoad(storyResponse: StoryResponse) {
-                storyResponse2.postValue(storyResponse)
+//    override fun getListStory(token: String): LiveData<PagingData<StoryResponse>> {
+//        val storyResponse2 = MutableLiveData<StoryResponse>()
+//        remoteDataSource.getListStory(object : RemoteDataSource.GetListStoryCallback{
+//            override fun onStoryLoad(storyResponse: StoryResponse) {
+//                storyResponse2.postValue(storyResponse)
+//            }
+//        }, token)
+//        return storyResponse2
+//    }
+    override  fun getAllStory(token: String): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5,
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(
+                    api = apiService,
+                    dataStoreRepository = pref
+                )
             }
-        }, token)
-        return storyResponse2
+        ).liveData
     }
 
-    override fun postNewStory(token: String, imageFile: File, desc: String, lon: String?, lat: String?): LiveData<AddStoryResponse> {
+
+
+    override  fun postNewStory(token: String, imageFile: File, desc: String, lon: String?, lat: String?): LiveData<AddStoryResponse> {
         val uploadResponseStatus = MutableLiveData<AddStoryResponse>()
 
         remoteDataSource.postNewStory(object : RemoteDataSource.AddNewStoryCallback{

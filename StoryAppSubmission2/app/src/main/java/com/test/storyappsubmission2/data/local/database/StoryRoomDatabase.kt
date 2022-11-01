@@ -7,12 +7,13 @@ import androidx.room.RoomDatabase
 import com.test.storyappsubmission2.data.remote.response.ListStoryItem
 
 @Database(
-    entities = [ListStoryItem::class],
+    entities = [ListStoryItem::class, RemoteKeys::class],
     version = 1,
     exportSchema = false
 )
 abstract class StoryRoomDatabase : RoomDatabase() {
-
+    abstract fun remoteKeysDao(): RemoteKeysDao
+    abstract fun storyDao(): StoryDao
     companion object {
         @Volatile
         private var INSTANCE: StoryRoomDatabase? = null
@@ -22,11 +23,8 @@ abstract class StoryRoomDatabase : RoomDatabase() {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
-                    StoryRoomDatabase::class.java, "story_database"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
-                    .also { INSTANCE = it }
+                    StoryRoomDatabase::class.java,
+                    "story_db").build()
             }
         }
     }

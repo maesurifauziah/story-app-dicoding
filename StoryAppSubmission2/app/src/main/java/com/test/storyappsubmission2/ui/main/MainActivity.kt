@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Debug
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.storyappsubmission2.R
+import com.test.storyappsubmission2.adapter.LoadingStateAdapter
 import com.test.storyappsubmission2.data.remote.response.ListStoryItem
 import com.test.storyappsubmission2.databinding.ActivityMainBinding
 import com.test.storyappsubmission2.ui.ViewModelFactory
@@ -46,9 +49,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }else{
-                binding.rvListStory.adapter = adapter
-                mainViewModel.getListStory(user.token).observe(this){
-                    it.listStory?.let { it1 -> adapter.submitList(it1) }
+                binding.rvListStory.adapter = adapter.withLoadStateFooter(
+                    footer = LoadingStateAdapter {
+                        adapter.retry()
+                    }
+                )
+                mainViewModel.getAllStory(user.token).observe(this) {
+                    Log.e("List", it.toString())
+                    adapter.submitData(lifecycle, it)
                 }
             }
         }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,7 @@ import com.test.storyappsubmission2.ui.detailstory.DetailStoryActivity
 import com.test.storyappsubmission2.utils.withDateFormat
 
 class StoryAdapter :
-    ListAdapter<ListStoryItem, StoryAdapter.MyViewHolderStory>(DIFF_CALLBACK) {
+    PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolderStory>(DIFF_CALLBACK) {
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
             override fun areItemsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
@@ -55,8 +56,8 @@ class StoryAdapter :
                 intent.putExtra(DetailStoryActivity.CREATE_AT, data.createdAt)
                 intent.putExtra(DetailStoryActivity.DESCRIPTION, data.description)
                 intent.putExtra(DetailStoryActivity.PHOTO_URL, data.photoUrl)
-                intent.putExtra(DetailStoryActivity.LONGITUDE, if (data.lon == null) "" else data.lon.toString())
-                intent.putExtra(DetailStoryActivity.LATITUDE, if (data.lat == null) "" else data.lat.toString())
+                intent.putExtra(DetailStoryActivity.LONGITUDE, data.lon.toString())
+                intent.putExtra(DetailStoryActivity.LATITUDE, data.lat.toString())
 
 
                 val optionsCompat: ActivityOptionsCompat =

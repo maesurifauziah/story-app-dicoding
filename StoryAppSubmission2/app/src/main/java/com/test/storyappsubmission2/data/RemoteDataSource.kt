@@ -105,35 +105,11 @@ class RemoteDataSource {
         })
     }
 
-    fun getListStory(callback: GetListStoryCallback, token: String){
-        val client = ApiConfig.getApiService().getListStory(bearer = "Bearer $token")
-        client.enqueue(object : Callback<StoryResponse>{
-            override fun onResponse(
-                call: Call<StoryResponse>,
-                response: Response<StoryResponse>
-            ) {
-                if (response.isSuccessful){
-                    response.body()?.let { callback.onStoryLoad(it) }
-                }else{
-                    val storyResponse = StoryResponse(
-                        null,
-                        true,
-                        "Load Failed!"
-                    )
-                    callback.onStoryLoad(storyResponse)
-                }
-            }
 
-            override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
-                val storyResponse = StoryResponse(
-                    null,
-                    true,
-                    t.message.toString()
-                )
-                callback.onStoryLoad(storyResponse)
-            }
-        })
-    }
+//    fun getListStory(callback: GetListStoryCallback, token: String): StoryResponse {
+//        val client = ApiConfig.getApiService().getListStory(bearer = "Bearer $token")
+//        return client
+//    }
 
     fun postNewStory(callback: AddNewStoryCallback, token: String, imageFile: File, desc: String, lon: String? = null, lat: String? = null){
         callback.onAddStory(
@@ -210,7 +186,7 @@ class RemoteDataSource {
                     response.body()?.let { callback.onMapsStoryLoad(it) }
                 }else{
                     val storyResponse = StoryResponse(
-                        null,
+                        emptyList(),
                         true,
                         "Load Failed!"
                     )
@@ -220,7 +196,7 @@ class RemoteDataSource {
 
             override fun onFailure(call: Call<StoryResponse>, t: Throwable) {
                 val storyResponse = StoryResponse(
-                    null,
+                    emptyList(),
                     true,
                     t.message.toString()
                 )
