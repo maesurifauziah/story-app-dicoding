@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.test.storyappsubmission2.R
@@ -22,13 +23,15 @@ import com.test.storyappsubmission2.ui.signin.SigninViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
-    private val signinViewModel: SigninViewModel by viewModels {
-        factory
-    }
-    private val mainViewModel: MainViewModel by viewModels {
-        factory
-    }
+//    private val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+//    private val signinViewModel: SigninViewModel by viewModels {
+//        factory
+//    }
+//    private val mainViewModel: MainViewModel by viewModels {
+//        factory
+//    }
+    private lateinit var signinViewModel: SigninViewModel
+    private lateinit var mainViewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.title = getString(R.string.dashboard_story)
+
+        val factory = ViewModelFactory.getInstance(this)
+        signinViewModel = ViewModelProvider(this, factory)[SigninViewModel::class.java]
+        mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
 
         val adapter = StoryAdapter()
 

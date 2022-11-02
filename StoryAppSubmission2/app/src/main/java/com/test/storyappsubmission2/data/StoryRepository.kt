@@ -1,11 +1,9 @@
 package com.test.storyappsubmission2.data
 
 import androidx.lifecycle.*
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
+import androidx.paging.*
 import com.test.storyappsubmission2.data.local.UserPreferenceDatastore
+import com.test.storyappsubmission2.data.local.database.StoryRoomDatabase
 import com.test.storyappsubmission2.data.remote.response.*
 import com.test.storyappsubmission2.network.ApiService
 import java.io.File
@@ -13,7 +11,8 @@ import java.io.File
 class StoryRepository(
     private val apiService: ApiService,
     private val pref: UserPreferenceDatastore,
-    private val remoteDataSource: RemoteDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val storyRoomDatabase: StoryRoomDatabase
 ) : AppDataSource {
 
     override  fun getUser(): LiveData<SignInResult> {
@@ -96,10 +95,11 @@ class StoryRepository(
         fun getInstance(
             apiService: ApiService,
             pref: UserPreferenceDatastore,
-            remoteDataSource: RemoteDataSource
+            remoteDataSource: RemoteDataSource,
+            storyRoomDatabase: StoryRoomDatabase
         ): StoryRepository =
             instance ?: synchronized(this) {
-                instance ?: StoryRepository(apiService, pref, remoteDataSource)
+                instance ?: StoryRepository(apiService, pref, remoteDataSource, storyRoomDatabase)
             }.also { instance = it }
     }
 

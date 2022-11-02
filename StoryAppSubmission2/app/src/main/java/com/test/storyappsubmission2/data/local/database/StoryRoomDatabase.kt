@@ -8,12 +8,12 @@ import com.test.storyappsubmission2.data.remote.response.ListStoryItem
 
 @Database(
     entities = [ListStoryItem::class, RemoteKeys::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 abstract class StoryRoomDatabase : RoomDatabase() {
-    abstract fun remoteKeysDao(): RemoteKeysDao
     abstract fun storyDao(): StoryDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
     companion object {
         @Volatile
         private var INSTANCE: StoryRoomDatabase? = null
