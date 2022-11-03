@@ -1,0 +1,7 @@
+SEKENARIO PENGUJIAN
+
+1. MainViewModelTest
+    a. Ketika berhasil memuat data List Story
+           - Memastikan data tidak null.
+           - Memastikan jumlah data sesuai dengan yang diharapkan
+

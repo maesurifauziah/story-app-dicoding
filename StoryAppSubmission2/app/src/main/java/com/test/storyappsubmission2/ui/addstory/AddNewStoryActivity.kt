@@ -92,7 +92,6 @@ class AddNewStoryActivity : AppCompatActivity() {
         binding.btnAddCamera.setOnClickListener { startCameraX() }
         binding.btnAddGalery.setOnClickListener { startGallery() }
         binding.buttonSetLocation.setOnClickListener {
-            mainViewModel.isLocation.postValue(true)
             lon = mainViewModel.coordLon.value.toString().toDouble()
             lat = mainViewModel.coordLat.value.toString().toDouble()
             val location = getAddressName(this@AddNewStoryActivity, lat, lon).toString()
