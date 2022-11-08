@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.test.storyappsubmission2.DataDummy
 import com.test.storyappsubmission2.data.StoryRepository
 import com.test.storyappsubmission2.data.remote.response.SignInResponse
+import com.test.storyappsubmission2.data.remote.response.SignInResult
 import com.test.storyappsubmission2.getOrAwaitValue
 import org.junit.Assert
 import org.junit.Before
@@ -26,7 +27,7 @@ class SigninViewModelTest{
     private val dummyResponseSuccess = DataDummy.generateDummyResponseSignInSuccess()
     private val dummyResponseErrorInvalidEmailFormat = DataDummy.generateDummyResponseSignInErrorInvalidEmailFormat()
     private val dummyResponseErrorUserNotFound = DataDummy.generateDummyResponseSignInErrorUserNotFound()
-//    private val dummySignInResult = DataDummy.generateDummySignInResult()
+    private val dummySignInResult = DataDummy.generateDummySignInResult()
 //    private val dummySignInResultEmpty = DataDummy.generateDummySignInResultEmpty()
     private val dummyParamEmail = "mf77@gmail.com"
     private val dummyParamPassword = "1111111"
@@ -68,16 +69,16 @@ class SigninViewModelTest{
         Assert.assertEquals(actualResponse, expectedResponse.value)
     }
 
-//    @Test
-//    fun `when Get User`() {
-//        val expectedResponse = MutableLiveData<SignInResponse>()
-//        expectedResponse.value = dummyResponseErrorUserNotFound
-//        Mockito.`when`(storyRepository.signin("xx", "xx")).thenReturn(expectedResponse)
-//        val actualResponse = signinViewModel.signin("xx", "xx").getOrAwaitValue()
-//        Mockito.verify(storyRepository).signin("xx", "xx")
-//       Assert.assertNotNull(actualResponse)
-//       Assert.assertEquals(actualResponse, expectedResponse.value)
-//    }
+    @Test
+    fun `when Get User`() {
+        val expectedResponse = MutableLiveData<SignInResult>()
+        expectedResponse.value = dummySignInResult
+        Mockito.`when`(storyRepository.getUser()).thenReturn(expectedResponse)
+        val actualResponse = signinViewModel.getUser().getOrAwaitValue()
+        Mockito.verify(storyRepository).getUser()
+       Assert.assertNotNull(actualResponse)
+       Assert.assertEquals(actualResponse, expectedResponse.value)
+    }
 
 
 

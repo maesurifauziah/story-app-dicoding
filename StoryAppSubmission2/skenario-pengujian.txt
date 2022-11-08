@@ -56,6 +56,11 @@ UNI TESTING
            - Membuat actualResponse.
            - Memastikan actualResponse tidak null.
            - Memastikan data dummyResponseErrorUserNotFound sesuai dengan data actualResponse
+    d. Ketika get user
+           - Menginisialisasi expectedResponse dari dummySignInResult.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data dummySignInResult sesuai dengan data actualResponse
 
 4. SignupViewModelTest
     a. Ketika register berhasil
