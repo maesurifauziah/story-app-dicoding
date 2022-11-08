@@ -1,7 +1,93 @@
-SEKENARIO PENGUJIAN
+UNI TESTING
 
-1. MainViewModelTest
-    a. Ketika berhasil memuat data List Story
-           - Memastikan data tidak null.
-           - Memastikan jumlah data sesuai dengan yang diharapkan
+1. StoryRepositoryTest
+    a. response ketika register
+           - Menginisiarlisasi expectedResponse dari dummyResponseSignUp.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan response expectedStory sesuai dengan response actualResponse
+    b. response ketika login
+           - Menginisiarlisasi expectedStory dari dummyResponseSignIn.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan response expectedResponse sesuai dengan response actualResponse
+    c. response ketika memuat list map story
+           - Menginisiarlisasi expectedStory dari dummyStoryResponse.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan response expectedResponse sesuai dengan response actualResponse
+    d. response ketika memuat list story
+           - Menginisiarlisasi expectedStory dari dummyStoryResponse.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan jumlah data differ sesuai dengan jumlah data actualResponse
 
+2. MainViewModelTest
+    a. Ketika memuat data list story
+           - Menginisialisasi expectedStory dari dummyStory.
+           - Membuat actualStory.
+           - Memastikan actualStory tidak null.
+           - Memastikan jumlah data dummyStory sesuai dengan data actualStory
+    b. Ketika menambahkan story baru
+           - Menginisialisasi file.
+           - Menginisialisasi expectedResponse dari dummyAddStoryResponse.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data differ sesuai dengan data actualResponse
+    c. Ketika memuat data list maps story
+           - Menginisialisasi expectedResponse dari dummyAddStoryResponse.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data dummyStoryResponse sesuai dengan data actualResponse
+
+3. SigninViewModelTest
+    a. Ketika login berhasil
+           - Menginisialisasi expectedResponse dari dummyResponseSuccess.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data dummyResponseSuccess sesuai dengan data actualResponse
+    b. Ketika login error invalid email format
+           - Menginisialisasi expectedResponse dari dummyResponseErrorInvalidEmailFormat.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data dummyResponseErrorInvalidEmailFormat sesuai dengan data actualResponse
+    c. Ketika login error user tidak ditemukan
+           - Menginisialisasi expectedResponse dari dummyResponseErrorUserNotFound.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data dummyResponseErrorUserNotFound sesuai dengan data actualResponse
+
+4. SignupViewModelTest
+    a. Ketika register berhasil
+           - Menginisialisasi expectedResponse dari dummyResponseSuccess.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data dummyResponseSuccess sesuai dengan data actualResponse
+    b. Ketika register gagal
+           - Menginisialisasi expectedResponse dari dummyResponseFailed.
+           - Membuat actualResponse.
+           - Memastikan actualResponse tidak null.
+           - Memastikan data dummyResponseFailed sesuai dengan data actualResponse
+
+@MediumTest
+1. MainActivity
+    a. Membuka Halaman MainActivity / Halaman Utama
+    b. Menampilkan List Story
+2. MapsActivity
+    a. Membuka Halaman MapsActivity
+    b. Menampilkan List Story Maps
+
+@LargeTest
+1. MainActivity
+	a.Menjalankan MainActivity jika sudah melakkukan login
+	b.Menampilkan data list story
+	c.Membuka detail story yang di pilih
+	d.Melakukan kilk navigasi back
+	e.Menjalankan halaman maps
+	f.Menampilkan data list maps story
+	g.Melakukan kilk navigasi back
+	h.Menjalankan halaman add new story
+	i.Mengisi form data dan setting lokasi
+	j.Melakukan navigasi back
+	k.Membukan halaman MainActivity
+	l.Selesai

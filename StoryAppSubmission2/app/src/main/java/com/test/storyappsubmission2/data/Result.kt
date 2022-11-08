@@ -1,4 +1,4 @@
-package com.test.storyappsubmission2
+package com.test.storyappsubmission2.data
 
 sealed class Result<out R> private constructor() {
     data class Success<out T>(val data: T) : Result<T>()

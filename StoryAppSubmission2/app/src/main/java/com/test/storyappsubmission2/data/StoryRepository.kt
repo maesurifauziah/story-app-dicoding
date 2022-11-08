@@ -64,8 +64,6 @@ class StoryRepository(
         ).liveData
     }
 
-
-
     override  fun postNewStory(token: String, imageFile: File, desc: String, lon: String?, lat: String?): LiveData<AddStoryResponse> {
         val uploadResponseStatus = MutableLiveData<AddStoryResponse>()
 

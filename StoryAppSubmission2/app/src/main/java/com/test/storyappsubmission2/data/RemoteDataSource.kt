@@ -132,13 +132,13 @@ class RemoteDataSource {
                 if (response.isSuccessful){
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error){
-//                        callback.onAddStory(responseBody)
-                        callback.onAddStory(
-                            addStoryResponse = AddStoryResponse(
-                                true,
-                                "$latitude!!, $logitude!!"
-                            )
-                        )
+                        callback.onAddStory(responseBody)
+//                        callback.onAddStory(
+//                            addStoryResponse = AddStoryResponse(
+//                                true,
+//                                "$latitude!!, $logitude!!"
+//                            )
+//                        )
                     }else{
                         callback.onAddStory(
                             addStoryResponse = AddStoryResponse(

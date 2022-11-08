@@ -1,9 +1,6 @@
 package com.test.storyappsubmission2
 
-import com.test.storyappsubmission2.data.remote.response.ListStoryItem
-import com.test.storyappsubmission2.data.remote.response.SignInResponse
-import com.test.storyappsubmission2.data.remote.response.SignInResult
-import com.test.storyappsubmission2.data.remote.response.SignUpResponse
+import com.test.storyappsubmission2.data.remote.response.*
 
 object DataDummy {
 
@@ -24,49 +21,85 @@ object DataDummy {
         return items
     }
 
-//    {
-//        "error": false,
-//        "message": "success",
-//        "loginResult": {
-//            "userId": "user-H5CTfuK4Cvq5FK1B",
-//            "name": "Maesuri Fauziah",
-//            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLUg1Q1RmdUs0Q3ZxNUZLMUIiLCJpYXQiOjE2Njc0NDcyNjZ9.53P9_qZ5Y0ZxShzNsr14EXIaCg9Qfq1sNack8U-cT0s"
-//        }
-//    }
-//
+    fun generateDummyStoryResponse(): StoryResponse {
+        return StoryResponse(
+            generateDummyListStoryItem(),
+            false,
+            "Stories fetched successfully"
+        )
+    }
+
+    fun generateDummyAddStoryResponse(): AddStoryResponse {
+        return AddStoryResponse(
+            false,
+            "success",
+        )
+    }
+
+
     fun generateDummyResponseSignInSuccess(): SignInResponse {
-        val loginresult = SignInResult(
+        val loginResult = SignInResult(
             "user-H5CTfuK4Cvq5FK1B",
             "Maesuri Fauziah",
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLUg1Q1RmdUs0Q3ZxNUZLMUIiLCJpYXQiOjE2Njc0NDcyNjZ9.53P9_qZ5Y0ZxShzNsr14EXIaCg9Qfq1sNack8U-cT0s"
         )
-        val signIn = SignInResponse(
-            loginresult,
-            false,
-            "success"
+        return SignInResponse(
+            loginResult,
+            error = false,
+            message = "200"
         )
-        return signIn
     }
 
-    fun generateDummyResponseSignInFailed(): SignInResponse {
-       return SignInResponse(
-           null,
-           false,
-           "success"
-       )
+    fun generateDummyResponseSignInErrorInvalidEmailFormat(): SignInResponse {
+        return SignInResponse(
+            null,
+            true,
+            "400"
+        )
+    }
+
+    fun generateDummyResponseSignInErrorUserNotFound(): SignInResponse {
+        return SignInResponse(
+            null,
+            true,
+            "401"
+        )
+    }
+
+    fun generateDummySignInResult(): SignInResult {
+        return SignInResult(
+            "Maesuri Fauziah",
+            "mf77@gmail.com",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLUg1Q1RmdUs0Q3ZxNUZLMUIiLCJpYXQiOjE2Njc0NDcyNjZ9.53P9_qZ5Y0ZxShzNsr14EXIaCg9Qfq1sNack8U-cT0s"
+        )
+    }
+
+    fun generateDummySignInResultEmpty(): SignInResult {
+        return SignInResult(
+            "",
+            "",
+            ""
+        )
+    }
+
+    fun generateDummyResponseSignUp(): SignUpResponse {
+        return SignUpResponse(
+            error = false,
+            message = "success"
+        )
     }
 
     fun generateDummyResponseSignUpSuccess(): SignUpResponse {
         return SignUpResponse(
-            false,
-            "User created"
+            error = false,
+            message = "200"
         )
     }
 
     fun generateDummyResponseSignUpFailed(): SignUpResponse {
         return SignUpResponse(
             true,
-            "Email is already taken"
+            "400"
         )
     }
 }
